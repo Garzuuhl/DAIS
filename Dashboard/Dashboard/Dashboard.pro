@@ -1,4 +1,4 @@
-QT += quick
+QT += quick mqtt
 
 CONFIG += c++11
 
@@ -15,9 +15,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mqttconnection.cpp
+        qmlmqttclient.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += \
+    dashboard.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -31,4 +32,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    mqttconnection.hpp
+    qmlmqttclient.hpp
+
+DISTFILES += \
+    qml/SpeedMeter.qml \
+    qml/dashboard.qml \
