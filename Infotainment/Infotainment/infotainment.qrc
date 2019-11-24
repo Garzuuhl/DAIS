@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/infotainment.qml</file>
+        <file>qml/CustomFooterMenu.qml</file>
+        <file>qml/CustomHeaderMenu.qml</file>
+    </qresource>
+</RCC>
