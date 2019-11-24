@@ -5,6 +5,7 @@ import QtQuick.Controls 2.12
 
 // Make registered qmlmqttclient visible to qml
 import MqttClient 1.0
+import QtQuick.Layouts 1.3
 
 ApplicationWindow {
     id: root
@@ -13,7 +14,7 @@ ApplicationWindow {
     visibility: Window.Windowed
     width: screen.width
     height: screen.height
-    color: "black"
+    color: "#393939"
     title: "DAIS - Dashboard"
 
     // Different properties holding Subscriptions of type QMqttTopicFilter*
@@ -119,10 +120,11 @@ ApplicationWindow {
 
     function setOilLevelWarning(payload) {
         valueSource.lowOil = (payload === 'True'
-                               || payload === 'true') ? true : false
+                              || payload === 'true') ? true : false
     }
 
     // Instantiation of qmlmqttclient
+
     MqttClient {
         id: mqttclient
         clientId: "DAIS - Dashboard"
@@ -215,8 +217,65 @@ ApplicationWindow {
         }
     }
 
-    Column {
-        id: column
+
+    RowLayout {
+        id: rowLayout
+        visible: true
         anchors.fill: parent
+
+        Pane {
+            id: rpm_holder
+            width: 200
+            height: 200
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        }
+
+        Pane {
+            id: info_holder
+            width: 200
+            height: 200
+            clip: false
+            Layout.preferredWidth: 100
+            Layout.topMargin: 0
+            Layout.columnSpan: 1
+            Layout.rowSpan: 1
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        }
+
+        Pane {
+            id: speed_holder
+            width: 200
+            height: 200
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        }
     }
+
+    Image {
+        id: background
+        z: 100
+        smooth: true
+        antialiasing: false
+        enabled: false
+        anchors.fill: parent
+        fillMode: Image.Stretch
+        source: "../background/frame.svg"
+
+    }
+
+
+
+
+
 }
+
+/*##^##
+Designer {
+    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:6;invisible:true}
+}
+##^##*/

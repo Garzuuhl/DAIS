@@ -14,5 +14,6 @@
         <file>fonts/Roboto-Regular.ttf</file>
         <file>fonts/Roboto-Thin.ttf</file>
         <file>fonts/Roboto-ThinItalic.ttf</file>
+        <file>background/frame.svg</file>
     </qresource>
 </RCC>
