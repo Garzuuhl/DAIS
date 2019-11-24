@@ -22,23 +22,6 @@ ApplicationWindow {
     property var gearSubscription: 0
     property var rpmSubscription: 0
     property var maxrpmSubscription: 0
-    property var fuelSubscription: 0
-    property var tempSubscription: 0
-    property var blinkSubscription: 0
-    property var maxkphSubscription: 0
-    property var lightOnSubscription: 0
-    property var fullbeamSubscription: 0
-    property var warningSubscription: 0
-    property var absSubscription: 0
-    property var handbrakeSubscription: 0
-    property var seatbeltSubscription: 0
-    property var doorOpenSubscription: 0
-    property var fogbeamSubscription: 0
-    property var motorSubscription: 0
-    property var batterySubscription: 0
-    property var tpmsSubscription: 0
-    property var coolantSubscription: 0
-    property var warnsignalOilLevelSubscription: 0
 
     // Parse received messages from subscription and set values
     function setSpeed(payload) {
@@ -52,75 +35,6 @@ ApplicationWindow {
     }
     function setMaxRpm(payload) {
         valueSource.maxrpm = parseFloat(payload)
-    }
-    function setFuel(payload) {
-        valueSource.fuel = parseFloat(payload)
-    }
-    function setTemp(payload) {
-        valueSource.temp = parseFloat(payload)
-    }
-    function setMaxKph(payload) {
-        valueSource.maxkph = parseInt(payload)
-    }
-    function setLight(payload) {
-        valueSource.lightOn = (payload === 'True'
-                               || payload === 'true') ? true : false
-    }
-    function setFullbeam(payload) {
-        valueSource.fullbeamOn = (payload === 'True'
-                                  || payload === 'true') ? true : false
-    }
-    function setWarning(payload) {
-        valueSource.warning = (payload === 'True'
-                               || payload === 'true') ? true : false
-    }
-    function setAbs(payload) {
-        valueSource.abs = (payload === 'True'
-                           || payload === 'true') ? true : false
-    }
-    function setHandbrake(payload) {
-        valueSource.handbrake = (payload === 'True'
-                                 || payload === 'true') ? true : false
-    }
-    function setSeatbelt(payload) {
-        valueSource.seatbelt = (payload === 'True'
-                                || payload === 'true') ? true : false
-    }
-    function setDoor(payload) {
-        valueSource.doorOpen = (payload === 'True'
-                                || payload === 'true') ? true : false
-    }
-    function setFogbeam(payload) {
-        valueSource.fogbeam = (payload === 'True'
-                               || payload === 'true') ? true : false
-    }
-    function setMotor(payload) {
-        valueSource.motor = (parseInt(payload) !== 0) ? true : false
-    }
-    function setBattery(payload) {
-        valueSource.battery = (payload === 'True'
-                               || payload === 'true') ? true : false
-    }
-    function setTirepressure(payload) {
-        valueSource.tpms = (payload === 'True'
-                            || payload === 'true') ? true : false
-    }
-    function setCoolant(payload) {
-        valueSource.coolant = (payload === 'True'
-                               || payload === 'true') ? true : false
-    }
-
-    function setBlink(payload) {
-        var blink = parseInt(payload)
-        leftIndicator.on = blink === -1
-        leftIndicator.direction = Qt.LeftArrow
-        rightIndicator.on = blink === 1
-        rightIndicator.direction = Qt.RightArrow
-    }
-
-    function setOilLevelWarning(payload) {
-        valueSource.lowOil = (payload === 'True'
-                              || payload === 'true') ? true : false
     }
 
     // Instantiation of qmlmqttclient
@@ -156,104 +70,61 @@ ApplicationWindow {
             maxrpmSubscription = mqttclient.subscribe("car/MaxRPM")//
             maxrpmSubscription.messageReceived.connect(setMaxRpm)
 
-            fuelSubscription = mqttclient.subscribe("car/Fuel")//
-            fuelSubscription.messageReceived.connect(setFuel)
-
-            blinkSubscription = mqttclient.subscribe("car/Blink")//
-            blinkSubscription.messageReceived.connect(setBlink)
-
-            tempSubscription = mqttclient.subscribe("car/OutsideTemperature")//
-            tempSubscription.messageReceived.connect(setTemp)
-
-            maxkphSubscription = mqttclient.subscribe("car/MaxSpeed")//
-            maxkphSubscription.messageReceived.connect(setMaxKph)
-
-            lightOnSubscription = mqttclient.subscribe("car/Light")//
-            lightOnSubscription.messageReceived.connect(setLight)
-
-            fullbeamSubscription = mqttclient.subscribe("car/Fullbeam")//
-            fullbeamSubscription.messageReceived.connect(setFullbeam)
-
-            warningSubscription = mqttclient.subscribe("car/Warnsignal")//
-            warningSubscription.messageReceived.connect(setWarning)
-
-            absSubscription = mqttclient.subscribe("car/WarnSignalABS")//
-            absSubscription.messageReceived.connect(setAbs)
-
-            handbrakeSubscription = mqttclient.subscribe(
-                        "car/HandbrakeActivated")//
-            handbrakeSubscription.messageReceived.connect(setHandbrake)
-
-            seatbeltSubscription = mqttclient.subscribe(
-                        "car/WarnSignalSeatbelt")//
-            seatbeltSubscription.messageReceived.connect(setSeatbelt)
-
-            doorOpenSubscription = mqttclient.subscribe(
-                        "car/WarnSignalDoorlock")//
-            doorOpenSubscription.messageReceived.connect(setDoor)
-
-            fogbeamSubscription = mqttclient.subscribe("car/FogLamp")//
-            fogbeamSubscription.messageReceived.connect(setFogbeam)
-
-            motorSubscription = mqttclient.subscribe("car/ErrorCode")//
-            motorSubscription.messageReceived.connect(setMotor)
-
-            batterySubscription = mqttclient.subscribe(
-                        "car/WarnSignalGenerator")//
-            batterySubscription.messageReceived.connect(setBattery)
-
-            tpmsSubscription = mqttclient.subscribe(
-                        "car/WarnSignalTirePressure")//
-            tpmsSubscription.messageReceived.connect(setTirepressure)
-
-            coolantSubscription = mqttclient.subscribe(
-                        "car/WarnSignalCoolantTemperature")
-            coolantSubscription.messageReceived.connect(setCoolant)
-
-            warnsignalOilLevelSubscription = mqttclient.subscribe("car/WarnSignalOilLevel")
-            warnsignalOilLevelSubscription.messageReceived.connect(setOilLevelWarning)
-
-            //valueSource.allLightsOn();
         }
     }
 
 
     RowLayout {
         id: rowLayout
+        anchors.top: parent.bottom
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.topMargin: -680
         visible: true
-        anchors.fill: parent
 
-        Pane {
-            id: rpm_holder
+        Rectangle {
+            id: leftPart
             width: 200
             height: 200
-            Layout.fillWidth: true
+            color: "#00ffffff"
+            Layout.preferredWidth: 200
             Layout.fillHeight: true
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+            TachoMeter{ id: tachoMeter; anchors.leftMargin: 40; anchors.fill: parent }
         }
 
-        Pane {
-            id: info_holder
+        Rectangle {
+            id: centerPart
             width: 200
             height: 200
-            clip: false
+            color: "#00ffffff"
             Layout.preferredWidth: 100
-            Layout.topMargin: 0
-            Layout.columnSpan: 1
             Layout.rowSpan: 1
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         }
 
-        Pane {
-            id: speed_holder
+        Rectangle {
+            id: rightPart
             width: 200
             height: 200
-            Layout.fillHeight: true
+            color: "#00ffffff"
+            Layout.preferredWidth: 200
             Layout.fillWidth: true
+            Layout.fillHeight: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+            SpeedMeter {
+                id: speedMeter
+                anchors.rightMargin: 40
+                anchors.fill: parent
+            }
         }
+
     }
 
     Image {
@@ -276,6 +147,7 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:6;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:4;anchors_height:639;anchors_width:764;anchors_y:0}
+D{i:2;anchors_height:100;anchors_width:100}D{i:8;invisible:true}
 }
 ##^##*/

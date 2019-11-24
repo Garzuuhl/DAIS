@@ -36,4 +36,5 @@ HEADERS += \
 
 DISTFILES += \
     qml/SpeedMeter.qml \
+    qml/TachoMeter.qml \
     qml/dashboard.qml \

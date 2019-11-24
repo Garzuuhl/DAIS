@@ -4,8 +4,6 @@ import QtGraphicalEffects 1.0
 
 Rectangle{
     id: rectangle
-    width: 600
-    height: 600
     color: "#00ffffff"
     z: 1
     border.color: "#00000000"
@@ -15,7 +13,7 @@ Rectangle{
 
     Rectangle
     {
-       id: speedRing
+       id: gearRing
        x: 175
        y: 175
        width: 200
@@ -33,13 +31,27 @@ Rectangle{
 
     Image {
         id: name
-        z: 1
         anchors.fill: parent
+        visible: true
+        clip: false
+        z: 1
         enabled: true
         smooth: true
         antialiasing: true
         fillMode: Image.PreserveAspectFit
-        source: "../background/speedmeter.svg"
+        source: "../background/tachometer.svg"
     }
 
 }
+
+
+
+
+
+
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:600;width:600}
+}
+##^##*/

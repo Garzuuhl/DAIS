@@ -15,5 +15,8 @@
         <file>fonts/Roboto-Thin.ttf</file>
         <file>fonts/Roboto-ThinItalic.ttf</file>
         <file>background/frame.svg</file>
+        <file>qml/TachoMeter.qml</file>
+        <file>background/tachometer.svg</file>
+        <file>background/speedmeter.svg</file>
     </qresource>
 </RCC>
