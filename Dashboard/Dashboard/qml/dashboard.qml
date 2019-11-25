@@ -76,11 +76,11 @@ ApplicationWindow {
 
     RowLayout {
         id: rowLayout
-        anchors.top: parent.bottom
+        anchors.top: parent.top
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        anchors.topMargin: -680
+        anchors.topMargin: 325
         visible: true
 
         Rectangle {
@@ -93,7 +93,7 @@ ApplicationWindow {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-            TachoMeter{ id: tachoMeter; anchors.leftMargin: 40; anchors.fill: parent }
+            TachoMeter{ id: tachoMeter; width: 600; height: 600; anchors.top: parent.top; anchors.topMargin: 0; anchors.right: parent.right; anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.leftMargin: 50; }
         }
 
         Rectangle {
