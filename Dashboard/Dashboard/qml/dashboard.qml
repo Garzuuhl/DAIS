@@ -1,11 +1,11 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
-
+import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.3
 
 // Make registered qmlmqttclient visible to qml
 import MqttClient 1.0
-import QtQuick.Layouts 1.3
 
 ApplicationWindow {
     id: root
@@ -26,6 +26,7 @@ ApplicationWindow {
     // Parse received messages from subscription and set values
     function setSpeed(payload) {
         valueSource.kph = Math.abs(parseFloat(payload))
+        console.log(valueSource.kph)
     }
     function setGear(payload) {
         valueSource.gear = payload
@@ -43,9 +44,10 @@ ApplicationWindow {
         id: mqttclient
         clientId: "DAIS - Dashboard"
         hostname: hostnameField.text
+        port: portField.text
         username: usernameField.text
         password: passwordField.text
-        port: portField.text
+
 
         cleanSession: true
 
@@ -74,6 +76,18 @@ ApplicationWindow {
     }
 
 
+
+    /*
+*
+*
+*
+*
+*          Design
+*
+*
+*
+*
+*/
     RowLayout {
         id: rowLayout
         anchors.top: parent.top
@@ -85,10 +99,8 @@ ApplicationWindow {
 
         Rectangle {
             id: leftPart
-            width: 200
-            height: 200
             color: "#00ffffff"
-            Layout.preferredWidth: 200
+            Layout.preferredWidth: 600
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -98,10 +110,8 @@ ApplicationWindow {
 
         Rectangle {
             id: centerPart
-            width: 200
-            height: 200
             color: "#00ffffff"
-            Layout.preferredWidth: 100
+            Layout.preferredWidth: 250
             Layout.rowSpan: 1
             Layout.fillHeight: true
             Layout.fillWidth: true
@@ -110,10 +120,8 @@ ApplicationWindow {
 
         Rectangle {
             id: rightPart
-            width: 200
-            height: 200
             color: "#00ffffff"
-            Layout.preferredWidth: 200
+            Layout.preferredWidth: 600
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -139,7 +147,102 @@ ApplicationWindow {
 
     }
 
+    Item {
+        id: mqttLogin
+        visible: false
+        width: 250
+        height: 350
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
 
+        Rectangle {
+            id: loginBackground
+            color: "#161616"
+            border.color: "#ef7d25"
+            anchors.fill: parent
+
+        }
+
+/*
+        DropShadow {
+            id: loginBackgroundDS
+            anchors.fill: loginBackground
+            horizontalOffset: 0
+            verticalOffset: 0
+            radius: 8.0
+            samples: 17
+            color: "#80000000"
+            source: loginBackground
+            transparentBorder: true
+        }
+*/
+        ColumnLayout {
+            id: loginLayout
+            width: 300
+            height: 300
+            spacing: 0
+            anchors.fill: parent
+
+            TextField {
+                id: hostnameField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Host>"
+            }
+
+            TextField {
+                id: portField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Port>"
+            }
+
+            TextField {
+                id: usernameField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Username>"
+                enabled: mqttclient.state === MqttClient.Disconnected
+            }
+
+            TextField {
+                id: passwordField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Password>"
+                enabled: mqttclient.state === MqttClient.Disconnected
+            }
+
+            Button {
+                id: connectButton
+                text: mqttclient.state === MqttClient.Connected ? "Disconnect" : "Connect"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                onClicked: {
+                    if (mqttclient.state === MqttClient.Connected)
+                        mqttclient.disconnectFromHost()
+                    else {
+                        mqttclient.connectToHost()
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    Rectangle {
+        id: keyboardArea
+        focus: true
+
+        // Press escape key to quit application
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Escape)
+                Qt.quit()
+            else if ((event.modifiers & Qt.ControlModifier) && (event.key === Qt.Key_L)){
+                mqttLogin.visible = !mqttLogin.visible
+            }
+        }
+    }
 
 
 
@@ -148,6 +251,6 @@ ApplicationWindow {
 /*##^##
 Designer {
     D{i:0;height:1080;width:1920}D{i:4;anchors_height:639;anchors_width:764;anchors_y:0}
-D{i:2;anchors_height:100;anchors_width:100}D{i:8;invisible:true}
+D{i:2;anchors_height:100;anchors_width:100}D{i:8;invisible:true}D{i:10;anchors_height:200;anchors_width:200}
 }
 ##^##*/

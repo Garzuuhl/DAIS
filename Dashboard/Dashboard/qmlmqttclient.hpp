@@ -9,6 +9,7 @@ Quelle: https://doc-snapshots.qt.io/qtmqtt/qtmqtt-quicksubscription-example.html
 #include <QtCore/QMap>
 #include <QtMqtt/QMqttClient>
 #include <QtMqtt/QMqttSubscription>
+#include<QDebug>
 
 class QmlMqttClient;
 
