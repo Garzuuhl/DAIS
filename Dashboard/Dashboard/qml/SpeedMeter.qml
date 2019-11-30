@@ -12,6 +12,8 @@ Rectangle{
     border.width: 0
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.verticalCenter: parent.verticalCenter
+    clip: false
+    transformOrigin: Item.Top
 
     Rectangle
     {
@@ -22,24 +24,34 @@ Rectangle{
        height: 200
        z: 1
        radius: Math.max(width, height) / 2
-       border.width: 3
+       border.color: "#272727"
        visible: true
        clip: false
+       color: "transparent"
        anchors.horizontalCenter: parent.horizontalCenter
        anchors.verticalCenter: parent.verticalCenter
-       color: "transparent"
-       border.color: "#ef7d25"
+       layer.effect: DropShadow {
+           transparentBorder: true
+           radius: 6.0
+       }
     }
 
     Image {
         id: name
-        z: 1
+        width: 650
+        height: 650
         anchors.fill: parent
+        visible: true
+        clip: false
+        z: 1
         enabled: true
         smooth: true
         antialiasing: true
         fillMode: Image.PreserveAspectFit
-        source: "../background/speedmeter.svg"
+        source: "../background/tachometer.svg"
     }
 
 }
+
+
+

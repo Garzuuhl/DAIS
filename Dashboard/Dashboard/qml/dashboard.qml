@@ -80,60 +80,107 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        anchors.topMargin: 325
+        anchors.topMargin: 0
         visible: true
 
         Rectangle {
             id: leftPart
-            width: 200
-            height: 200
             color: "#00ffffff"
-            Layout.preferredWidth: 200
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            Layout.preferredHeight: 1080
+            transformOrigin: Item.Center
+            Layout.preferredWidth: 700
+            Layout.fillHeight: false
+            Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-            TachoMeter{ id: tachoMeter; width: 600; height: 600; anchors.top: parent.top; anchors.topMargin: 0; anchors.right: parent.right; anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.leftMargin: 50; }
+            Rectangle {
+                id: leftSignals
+                color: "#00ffffff"
+                anchors.top: parent.top
+                anchors.topMargin: 125
+                width: 700
+                height: 200
+                clip: false
+                transformOrigin: Item.TopLeft
+            }
+
+            TachoMeter{
+                id: tachoMeter;
+                x: 25
+                y: 0
+                width: 650
+                height: 650
+                anchors.verticalCenterOffset: 110
+                anchors.horizontalCenterOffset: 25
+                clip: false
+            }
+
+            TempOil {
+                id: tempOil
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 900
+                width: 650
+                height: 30
+            }
         }
 
         Rectangle {
             id: centerPart
-            width: 200
-            height: 200
+            x: 700
             color: "#00ffffff"
-            Layout.preferredWidth: 100
-            Layout.rowSpan: 1
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            transformOrigin: Item.Top
+            Layout.preferredHeight: 1080
+            Layout.preferredWidth: 520
+            Layout.fillHeight: false
+            Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         }
 
         Rectangle {
             id: rightPart
-            width: 200
-            height: 200
+            x: 1220
             color: "#00ffffff"
-            Layout.preferredWidth: 200
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.preferredHeight: 1080
+            Layout.preferredWidth: 700
+            Layout.fillWidth: false
+            Layout.fillHeight: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+            Rectangle {
+                id: rightSignals
+                color: "#00ffffff"
+                anchors.top: parent.top
+                anchors.topMargin: 125
+                width: 700
+                height: 200
+                clip: false
+                transformOrigin: Item.TopLeft
+            }
 
             SpeedMeter {
                 id: speedMeter
-                anchors.rightMargin: 40
-                anchors.fill: parent
+                x: 25
+                y: 0
+                width: 650
+                height: 650
+                anchors.verticalCenterOffset: 110
+                anchors.horizontalCenterOffset: -25
+                clip: false
             }
         }
-
     }
 
     Image {
         id: background
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.left: parent.left
         z: 100
         smooth: true
         antialiasing: false
         enabled: false
-        anchors.fill: parent
         fillMode: Image.Stretch
         source: "../background/frame.svg"
 
@@ -147,7 +194,7 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:4;anchors_height:639;anchors_width:764;anchors_y:0}
-D{i:2;anchors_height:100;anchors_width:100}D{i:8;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:4;anchors_y:0}D{i:5;anchors_height:650;anchors_width:650;anchors_y:0}
+D{i:2;anchors_height:100;anchors_width:100}D{i:11;invisible:true}
 }
 ##^##*/

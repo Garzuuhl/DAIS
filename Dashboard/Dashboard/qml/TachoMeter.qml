@@ -2,9 +2,11 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
-Rectangle{
+Rectangle {
     id: rectangle
     color: "#00ffffff"
+    clip: false
+    transformOrigin: Item.Top
     z: 1
     border.color: "#00000000"
     border.width: 0
@@ -20,17 +22,22 @@ Rectangle{
        height: 200
        z: 1
        radius: Math.max(width, height) / 2
-       border.width: 3
+       border.color: "#272727"
        visible: true
        clip: false
+       color: "transparent"
        anchors.horizontalCenter: parent.horizontalCenter
        anchors.verticalCenter: parent.verticalCenter
-       color: "transparent"
-       border.color: "#ef7d25"
+       layer.effect: DropShadow {
+           transparentBorder: true
+           radius: 6.0
+       }
     }
 
     Image {
         id: name
+        width: 650
+        height: 650
         anchors.fill: parent
         visible: true
         clip: false
@@ -52,6 +59,6 @@ Rectangle{
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:600;width:600}
+    D{i:0;height:650;width:650}
 }
 ##^##*/
