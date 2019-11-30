@@ -162,6 +162,16 @@ ApplicationWindow {
                 anchors.horizontalCenterOffset: -25
                 clip: false
             }
+
+            TempWasser {
+                id: tempWasser
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 900
+                width: 650
+                height: 30
+            }
         }
     }
 
@@ -187,6 +197,6 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:11;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:12;invisible:true}
 }
 ##^##*/

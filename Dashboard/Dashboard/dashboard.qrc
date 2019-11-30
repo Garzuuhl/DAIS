@@ -22,5 +22,8 @@
         <file>background/oil.svg</file>
         <file>background/tachometer_drehzahl.svg</file>
         <file>background/tachometer_geschwindigkeit.svg</file>
+        <file>qml/TempWasser.qml</file>
+        <file>background/engine-coolant.svg</file>
+        <file>background/fuel-filling.svg</file>
     </qresource>
 </RCC>
