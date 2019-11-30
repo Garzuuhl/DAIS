@@ -97,7 +97,7 @@ ApplicationWindow {
                 anchors.top: parent.top
                 anchors.topMargin: 125
                 width: 700
-                height: 200
+                height: 250
             }
 
             TachoMeter{
@@ -106,7 +106,7 @@ ApplicationWindow {
                 y: 0
                 width: 650
                 height: 650
-                anchors.verticalCenterOffset: 110
+                anchors.verticalCenterOffset: 160
                 anchors.horizontalCenterOffset: 25
                 clip: false
             }
@@ -116,7 +116,7 @@ ApplicationWindow {
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.top: parent.top
-                anchors.topMargin: 900
+                anchors.topMargin: 950
                 width: 650
                 height: 30
             }
@@ -147,7 +147,7 @@ ApplicationWindow {
                 anchors.top: parent.top
                 anchors.topMargin: 125
                 width: 700
-                height: 200
+                height: 250
                 clip: false
                 transformOrigin: Item.TopLeft
             }
@@ -158,7 +158,7 @@ ApplicationWindow {
                 y: 0
                 width: 650
                 height: 650
-                anchors.verticalCenterOffset: 110
+                anchors.verticalCenterOffset: 160
                 anchors.horizontalCenterOffset: -25
                 clip: false
             }
@@ -168,7 +168,7 @@ ApplicationWindow {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.top: parent.top
-                anchors.topMargin: 900
+                anchors.topMargin: 950
                 width: 650
                 height: 30
             }
