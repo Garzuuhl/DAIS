@@ -2,19 +2,15 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
-Rectangle {
+Item {
     id: rectangle
-    color: "#00ffffff"
     clip: false
     transformOrigin: Item.Top
     z: 1
-    border.color: "#00000000"
-    border.width: 0
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.verticalCenter: parent.verticalCenter
 
-    Rectangle
-    {
+    Rectangle {
        id: gearRing
        x: 175
        y: 175
@@ -35,7 +31,7 @@ Rectangle {
     }
 
     Image {
-        id: name
+        id: tacho_hintergrund
         width: 650
         height: 650
         anchors.fill: parent
@@ -47,6 +43,27 @@ Rectangle {
         antialiasing: true
         fillMode: Image.PreserveAspectFit
         source: "../background/tachometer.svg"
+    }
+
+    Image {
+        id: tacho_drehzahl
+        x: 0
+        y: 0
+        width: 650
+        height: 650
+        anchors.rightMargin: 7
+        anchors.leftMargin: 7
+        anchors.bottomMargin: 68
+        anchors.topMargin: -18
+        anchors.fill: parent
+        visible: true
+        clip: false
+        z: 1
+        enabled: true
+        smooth: true
+        antialiasing: true
+        fillMode: Image.PreserveAspectFit
+        source: "../background/tachometer_drehzahl.svg"
     }
 
 }

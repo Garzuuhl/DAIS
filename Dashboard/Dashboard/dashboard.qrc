@@ -20,5 +20,7 @@
         <file>background/speedmeter.svg</file>
         <file>qml/TempOil.qml</file>
         <file>background/oil.svg</file>
+        <file>background/tachometer_drehzahl.svg</file>
+        <file>background/tachometer_geschwindigkeit.svg</file>
     </qresource>
 </RCC>

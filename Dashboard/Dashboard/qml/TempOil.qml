@@ -2,9 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
-Rectangle {
+Item {
     id: oilTemp
-    color: "transparent"
     clip: false
     z: 1
 
@@ -35,7 +34,26 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
         source: "../background/oil.svg"
     }
+
+    Text {
+        id: oilTempInput
+        x: 465
+        y: -1
+        color: "#ef7d25"
+        text: qsTr("102 °C")
+        styleColor: "#272727"
+        style: Text.Raised
+        horizontalAlignment: Text.AlignLeft
+        font.family: "Roboto"
+        font.weight: Font.Bold
+        font.bold: true
+        verticalAlignment: Text.AlignVCenter
+        font.pointSize: 22
+
+    }
 }
+
+
 
 /*##^##
 Designer {

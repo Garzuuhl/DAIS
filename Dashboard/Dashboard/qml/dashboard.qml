@@ -83,9 +83,8 @@ ApplicationWindow {
         anchors.topMargin: 0
         visible: true
 
-        Rectangle {
+        Item {
             id: leftPart
-            color: "#00ffffff"
             Layout.preferredHeight: 1080
             transformOrigin: Item.Center
             Layout.preferredWidth: 700
@@ -93,15 +92,12 @@ ApplicationWindow {
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-            Rectangle {
+            Item {
                 id: leftSignals
-                color: "#00ffffff"
                 anchors.top: parent.top
                 anchors.topMargin: 125
                 width: 700
                 height: 200
-                clip: false
-                transformOrigin: Item.TopLeft
             }
 
             TachoMeter{
@@ -126,10 +122,9 @@ ApplicationWindow {
             }
         }
 
-        Rectangle {
+        Item {
             id: centerPart
             x: 700
-            color: "#00ffffff"
             transformOrigin: Item.Top
             Layout.preferredHeight: 1080
             Layout.preferredWidth: 520
@@ -138,19 +133,17 @@ ApplicationWindow {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         }
 
-        Rectangle {
+        Item {
             id: rightPart
             x: 1220
-            color: "#00ffffff"
             Layout.preferredHeight: 1080
             Layout.preferredWidth: 700
             Layout.fillWidth: false
             Layout.fillHeight: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-            Rectangle {
+            Item {
                 id: rightSignals
-                color: "#00ffffff"
                 anchors.top: parent.top
                 anchors.topMargin: 125
                 width: 700
@@ -194,7 +187,6 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:4;anchors_y:0}D{i:5;anchors_height:650;anchors_width:650;anchors_y:0}
-D{i:2;anchors_height:100;anchors_width:100}D{i:11;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:11;invisible:true}
 }
 ##^##*/
