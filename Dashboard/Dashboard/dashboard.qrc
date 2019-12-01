@@ -29,5 +29,12 @@
         <file>qml/RightSignals.qml</file>
         <file>background/turn-signal_left.svg</file>
         <file>background/turn-signal_right.svg</file>
+        <file>background/battery.svg</file>
+        <file>background/brake-system-warning.svg</file>
+        <file>background/malfunction-indicador.svg</file>
+        <file>background/fog-light.svg</file>
+        <file>background/high-beam.svg</file>
+        <file>background/low-beam.svg</file>
+        <file>qml/FuelSystem.qml</file>
     </qresource>
 </RCC>

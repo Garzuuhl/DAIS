@@ -30,7 +30,8 @@ Item {
         id: oilcan
         x: 119
         y: -20
-        height: 70
+        height: 30
+        anchors.verticalCenter: parent.verticalCenter
         fillMode: Image.PreserveAspectFit
         source: "../background/oil.svg"
     }

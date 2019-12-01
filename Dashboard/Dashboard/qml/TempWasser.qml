@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
 Item {
-    id: oilTemp
+    id: waterTemp
     width: 650
     height: 30
     clip: false
@@ -29,7 +29,7 @@ Item {
     }
 
     Image {
-        id: oilcan
+        id: engine_coolant
         x: 149
         y: -5
         height: 40
@@ -38,7 +38,7 @@ Item {
     }
 
     Text {
-        id: oilTempInput
+        id: waterTempInput
         x: 465
         y: -1
         color: "#ef7d25"

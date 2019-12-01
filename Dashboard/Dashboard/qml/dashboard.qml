@@ -115,10 +115,10 @@ ApplicationWindow {
                 id: tempOil
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin: 950
                 width: 650
                 height: 30
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 100
             }
         }
 
@@ -131,6 +131,18 @@ ApplicationWindow {
             Layout.fillHeight: false
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+            FuelSystem {
+                id: fuelSystem
+                x: 135
+                y: 962
+                width: 250
+                height: 75
+                anchors.horizontalCenterOffset: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 100
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
         }
 
         Item {
@@ -167,10 +179,10 @@ ApplicationWindow {
                 id: tempWasser
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin: 950
                 width: 650
                 height: 30
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 100
             }
         }
     }
@@ -197,6 +209,7 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:12;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:6;anchors_height:30}D{i:12;anchors_height:30}D{i:2;anchors_height:100;anchors_width:100}
+D{i:13;invisible:true}
 }
 ##^##*/

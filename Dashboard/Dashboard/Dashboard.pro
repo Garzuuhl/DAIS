@@ -35,6 +35,7 @@ HEADERS += \
     qmlmqttclient.hpp
 
 DISTFILES += \
+    qml/FuelSystem.qml \
     qml/LeftSignals.qml \
     qml/RightSignals.qml \
     qml/SpeedMeter.qml \
