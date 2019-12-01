@@ -92,7 +92,7 @@ ApplicationWindow {
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-            Item {
+            LeftSignals {
                 id: leftSignals
                 anchors.top: parent.top
                 anchors.topMargin: 125
@@ -142,7 +142,7 @@ ApplicationWindow {
             Layout.fillHeight: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-            Item {
+            RightSignals {
                 id: rightSignals
                 anchors.top: parent.top
                 anchors.topMargin: 125

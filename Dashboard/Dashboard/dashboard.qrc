@@ -25,5 +25,9 @@
         <file>qml/TempWasser.qml</file>
         <file>background/engine-coolant.svg</file>
         <file>background/fuel-filling.svg</file>
+        <file>qml/LeftSignals.qml</file>
+        <file>qml/RightSignals.qml</file>
+        <file>background/turn-signal_left.svg</file>
+        <file>background/turn-signal_right.svg</file>
     </qresource>
 </RCC>
