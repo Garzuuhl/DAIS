@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Shapes 1.11
 
 
 // Make registered qmlmqttclient visible to qml
@@ -132,6 +133,67 @@ ApplicationWindow {
             Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
+            Shape {
+                id: time_frame
+                y: 138
+                width: 250
+                height: 50
+                anchors.horizontalCenterOffset: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                ShapePath {
+                    id: time_frame_path
+                    strokeColor: "#40272727"
+                    miterLimit: 2
+                    strokeWidth: 4
+                    capStyle: ShapePath.RoundCap
+
+                    property int joinStyleIndex: 0
+
+                    property variant styles: [
+                        ShapePath.BevelJoin,
+                        ShapePath.MiterJoin,
+                        ShapePath.RoundJoin
+                    ]
+
+                    fillColor: "#80272727"
+
+                    joinStyle: styles[joinStyleIndex]
+
+                    dashPattern: [ 1, 4 ]
+                    startX: 0; startY: 0
+                    PathLine { x: 0; y: 0 }
+                    PathLine { x: 25; y: 50 }
+                    PathLine { x: 225; y: 50 }
+                    PathLine { x: 250; y: 0 }
+                }
+
+                Text {
+                    id: time
+                    x: 0
+                    y: 0
+                    color: "#ef7d25"
+                    text: qsTr("20:30")
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.pointSize: 28
+                    style: Text.Raised
+                    font.weight: Font.Bold
+                    font.family: "Roboto"
+                }
+
+                Media {
+                    id: media
+                    x: 0
+                    y: 0
+                    width: 500
+                    height: 650
+                    anchors.top: parent.top
+                    anchors.topMargin: 75
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+
             FuelSystem {
                 id: fuelSystem
                 x: 135
@@ -209,7 +271,7 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:6;anchors_height:30}D{i:12;anchors_height:30}D{i:2;anchors_height:100;anchors_width:100}
-D{i:13;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:6;anchors_height:30}D{i:15;anchors_y:225}D{i:20;anchors_height:30}
+D{i:2;anchors_height:100;anchors_width:100}D{i:21;invisible:true}
 }
 ##^##*/

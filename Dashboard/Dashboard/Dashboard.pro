@@ -37,6 +37,7 @@ HEADERS += \
 DISTFILES += \
     qml/FuelSystem.qml \
     qml/LeftSignals.qml \
+    qml/Media.qml \
     qml/RightSignals.qml \
     qml/SpeedMeter.qml \
     qml/TachoMeter.qml \
