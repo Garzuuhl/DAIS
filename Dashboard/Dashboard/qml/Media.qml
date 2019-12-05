@@ -27,6 +27,9 @@ Item {
     Text {
         id: interpret
         text: qsTr("Interpret")
+        horizontalAlignment: Text.AlignHCenter
+        width: music_cover.width
+        clip: true
         anchors.top: music_cover.bottom
         anchors.topMargin: 25
         anchors.horizontalCenter: parent.horizontalCenter
@@ -40,6 +43,9 @@ Item {
     Text {
         id: album
         text: qsTr("Album")
+        horizontalAlignment: Text.AlignHCenter
+        width: music_cover.width
+        clip: true
         anchors.top: interpret.bottom
         anchors.topMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
@@ -52,7 +58,10 @@ Item {
 
     Text {
         id: title
+        width: music_cover.width
         text: qsTr("Titel")
+        horizontalAlignment: Text.AlignHCenter
+        clip: true
         anchors.top: album.bottom
         anchors.topMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
