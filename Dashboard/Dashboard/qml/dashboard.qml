@@ -181,17 +181,17 @@ ApplicationWindow {
                     font.weight: Font.Bold
                     font.family: "Roboto"
                 }
+            }
 
-                Media {
-                    id: media
-                    x: 0
-                    y: 0
-                    width: 500
-                    height: 650
-                    anchors.top: parent.top
-                    anchors.topMargin: 75
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
+            Media {
+                id: media
+                x: 0
+                y: 0
+                width: 500
+                height: 650
+                anchors.top: parent.top
+                anchors.topMargin: 225
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             FuelSystem {

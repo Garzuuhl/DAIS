@@ -37,5 +37,6 @@
         <file>background/low-beam.svg</file>
         <file>qml/FuelSystem.qml</file>
         <file>qml/Media.qml</file>
+        <file>background/random_music_cover.jpg</file>
     </qresource>
 </RCC>

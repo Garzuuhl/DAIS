@@ -10,6 +10,7 @@ Item {
     Rectangle {
         width: 200
         height: 30
+        color: "#efa46f"
         gradient: Gradient {
             GradientStop {
                 position: 0
@@ -21,7 +22,11 @@ Item {
                 color: "#785238"
             }
         }
-        border.color: "#00000000"
+        layer.enabled: true
+        layer.effect: DropShadow {
+            transparentBorder: true
+            color: "#272727"
+        }
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
     }

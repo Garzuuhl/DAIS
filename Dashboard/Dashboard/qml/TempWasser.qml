@@ -23,7 +23,11 @@ Item {
                 color: "#785238"
             }
         }
-        border.color: "#00000000"
+        layer.enabled: true
+        layer.effect: DropShadow {
+            transparentBorder: true
+            color: "#272727"
+        }
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
     }
