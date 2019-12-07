@@ -41,5 +41,6 @@ DISTFILES += \
     qml/RightSignals.qml \
     qml/SpeedMeter.qml \
     qml/TachoMeter.qml \
+    qml/ValueSource.qml \
     qml/TempOil.qml \
     qml/dashboard.qml

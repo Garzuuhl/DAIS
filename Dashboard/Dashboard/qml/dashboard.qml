@@ -1,12 +1,13 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.3
 import QtQuick.Shapes 1.11
 
 
 // Make registered qmlmqttclient visible to qml
 import MqttClient 1.0
-import QtQuick.Layouts 1.3
 
 ApplicationWindow {
     id: root
@@ -27,6 +28,7 @@ ApplicationWindow {
     // Parse received messages from subscription and set values
     function setSpeed(payload) {
         valueSource.kph = Math.abs(parseFloat(payload))
+        console.log(valueSource.kph)
     }
     function setGear(payload) {
         valueSource.gear = payload
@@ -44,9 +46,10 @@ ApplicationWindow {
         id: mqttclient
         clientId: "DAIS - Dashboard"
         hostname: hostnameField.text
+        port: portField.text
         username: usernameField.text
         password: passwordField.text
-        port: portField.text
+
 
         cleanSession: true
 
@@ -75,6 +78,18 @@ ApplicationWindow {
     }
 
 
+
+    /*
+*
+*
+*
+*
+*          Design
+*
+*
+*
+*
+*/
     RowLayout {
         id: rowLayout
         anchors.top: parent.top
@@ -86,6 +101,7 @@ ApplicationWindow {
 
         Item {
             id: leftPart
+
             Layout.preferredHeight: 1080
             transformOrigin: Item.Center
             Layout.preferredWidth: 700
@@ -125,6 +141,7 @@ ApplicationWindow {
 
         Item {
             id: centerPart
+
             x: 700
             transformOrigin: Item.Top
             Layout.preferredHeight: 1080
@@ -209,6 +226,7 @@ ApplicationWindow {
 
         Item {
             id: rightPart
+
             x: 1220
             Layout.preferredHeight: 1080
             Layout.preferredWidth: 700
@@ -261,7 +279,103 @@ ApplicationWindow {
 
     }
 
+    Item {
+        id: mqttLogin
+        visible: false
+        width: 250
+        height: 350
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
 
+        Rectangle {
+            id: loginBackground
+            color: "#161616"
+            border.color: "#ef7d25"
+            anchors.fill: parent
+
+        }
+
+/*
+        DropShadow {
+            id: loginBackgroundDS
+            anchors.fill: loginBackground
+            horizontalOffset: 0
+            verticalOffset: 0
+            radius: 8.0
+            samples: 17
+            color: "#80000000"
+            source: loginBackground
+            transparentBorder: true
+        }
+*/
+        ColumnLayout {
+            id: loginLayout
+            width: 300
+            height: 300
+            spacing: 0
+            anchors.fill: parent
+
+            TextField {
+                id: hostnameField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Host>"
+            }
+
+            TextField {
+                id: portField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Port>"
+            }
+
+            TextField {
+                id: usernameField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Username>"
+                enabled: mqttclient.state === MqttClient.Disconnected
+            }
+
+            TextField {
+                id: passwordField
+                text: ""
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                placeholderText: "<Password>"
+                enabled: mqttclient.state === MqttClient.Disconnected
+            }
+
+            Button {
+                id: connectButton
+                text: mqttclient.state === MqttClient.Connected ? "Disconnect" : "Connect"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                onClicked: {
+                    if (mqttclient.state === MqttClient.Connected)
+                        mqttclient.disconnectFromHost()
+                    else {
+                        mqttclient.connectToHost()
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    Rectangle {
+        id: keyboardArea
+        focus: true
+
+        // Press escape key to quit application
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Escape)
+                Qt.quit()
+
+            if ((event.modifiers & Qt.ControlModifier) && (event.key === Qt.Key_L))
+                mqttLogin.visible = !mqttLogin.visible
+
+        }
+    }
 
 
 
@@ -269,7 +383,6 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1440;width:2560}D{i:6;anchors_height:30}D{i:15;anchors_y:225}D{i:20;anchors_height:30}
-D{i:2;anchors_height:100;anchors_width:100}D{i:21;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:21;invisible:true}
 }
 ##^##*/
