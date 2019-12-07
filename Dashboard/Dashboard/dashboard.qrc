@@ -18,5 +18,25 @@
         <file>qml/TachoMeter.qml</file>
         <file>background/tachometer.svg</file>
         <file>background/speedmeter.svg</file>
+        <file>qml/TempOil.qml</file>
+        <file>background/oil.svg</file>
+        <file>background/tachometer_drehzahl.svg</file>
+        <file>background/tachometer_geschwindigkeit.svg</file>
+        <file>qml/TempWasser.qml</file>
+        <file>background/engine-coolant.svg</file>
+        <file>background/fuel-filling.svg</file>
+        <file>qml/LeftSignals.qml</file>
+        <file>qml/RightSignals.qml</file>
+        <file>background/turn-signal_left.svg</file>
+        <file>background/turn-signal_right.svg</file>
+        <file>background/battery.svg</file>
+        <file>background/brake-system-warning.svg</file>
+        <file>background/malfunction-indicador.svg</file>
+        <file>background/fog-light.svg</file>
+        <file>background/high-beam.svg</file>
+        <file>background/low-beam.svg</file>
+        <file>qml/FuelSystem.qml</file>
+        <file>qml/Media.qml</file>
+        <file>background/random_music_cover.jpg</file>
     </qresource>
 </RCC>

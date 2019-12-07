@@ -35,7 +35,12 @@ HEADERS += \
     qmlmqttclient.hpp
 
 DISTFILES += \
+    qml/FuelSystem.qml \
+    qml/LeftSignals.qml \
+    qml/Media.qml \
+    qml/RightSignals.qml \
     qml/SpeedMeter.qml \
     qml/TachoMeter.qml \
     qml/ValueSource.qml \
-    qml/dashboard.qml \
+    qml/TempOil.qml \
+    qml/dashboard.qml
