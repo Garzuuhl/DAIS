@@ -251,9 +251,7 @@ ApplicationWindow {
 
     Image {
         id: background
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.left: parent.left
+        anchors.fill: parent
         z: 100
         smooth: true
         antialiasing: false
@@ -271,7 +269,7 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:6;anchors_height:30}D{i:15;anchors_y:225}D{i:20;anchors_height:30}
+    D{i:0;height:1440;width:2560}D{i:6;anchors_height:30}D{i:15;anchors_y:225}D{i:20;anchors_height:30}
 D{i:2;anchors_height:100;anchors_width:100}D{i:21;invisible:true}
 }
 ##^##*/
