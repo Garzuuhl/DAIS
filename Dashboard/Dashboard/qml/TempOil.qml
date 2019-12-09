@@ -46,7 +46,7 @@ Item {
         x: 465
         y: -1
         color: "#ef7d25"
-        text: qsTr("102 °C")
+        text: qsTr("%1 °C").arg(valueSource.oilTemp)
         styleColor: "#272727"
         style: Text.Raised
         horizontalAlignment: Text.AlignLeft

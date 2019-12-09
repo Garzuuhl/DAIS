@@ -32,7 +32,7 @@ Item {
        Text {
            id: gearStatus
            color: "#ef7d25"
-           text: qsTr("D1")
+           text: qsTr("%1").arg(valueSource.gear)
            anchors.horizontalCenter: parent.horizontalCenter
            anchors.verticalCenter: parent.verticalCenter
            style: Text.Raised

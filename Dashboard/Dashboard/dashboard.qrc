@@ -38,5 +38,6 @@
         <file>qml/FuelSystem.qml</file>
         <file>qml/Media.qml</file>
         <file>background/random_music_cover.jpg</file>
+        <file>qml/ValueSource.qml</file>
     </qresource>
 </RCC>

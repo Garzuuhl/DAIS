@@ -24,20 +24,104 @@ ApplicationWindow {
     property var gearSubscription: 0
     property var rpmSubscription: 0
     property var maxrpmSubscription: 0
+    property var fuelSubscription: 0
+    property var blinkerSubscription: 0
+    property var warnsignalSubscription: 0
+    property var handbrakeSubscription: 0
+    property var lightSubscription: 0
+    property var highbeamSubscription: 0
+    property var foglightSubscription: 0
+    property var outsideTempSubscription: 0
+    property var oilTempSubscription: 0
+    property var coolantTempSubscription: 0
+    property var motorSubscription: 0
+    property var batterySubscription: 0
+    property var oilSubscription: 0
+    property var coolantSubscription: 0
 
     // Parse received messages from subscription and set values
     function setSpeed(payload) {
         valueSource.kph = Math.abs(parseFloat(payload))
         console.log(valueSource.kph)
     }
+
     function setGear(payload) {
         valueSource.gear = payload
     }
+
     function setRpm(payload) {
         valueSource.rpm = parseFloat(payload)
     }
+
     function setMaxRpm(payload) {
         valueSource.maxrpm = parseFloat(payload)
+    }
+
+    function setFuel(payload) {
+        valueSource.fuel = parseFloat(payload)
+    }
+
+    function setBlinker(payload) {
+        var blink = parseInt(payload)
+        leftSignals.turnSignal_left.visible = blink === -1
+        rightSignals.turnSignal_right.visible = blink === 1
+    }
+
+    function setHandbrake(payload) {
+        valueSource.handbrake =
+                (payload === 'True' || payload === 'true') ? true : false
+    }
+
+    function setLight(payload) {
+        valueSource.light =
+                (payload === 'True' || payload === 'true') ? true : false
+    }
+
+    function setHighbeam(payload) {
+        valueSource.highbeam =
+                (payload === 'True' || payload === 'true') ? true : false
+    }
+
+    function setFoglight(payload) {
+        valueSource.foglight =
+                (payload === 'True' || payload === 'true') ? true : false
+    }
+
+    function setOutsideTemp(payload) {
+        valueSource.outsideTemp = parseFloat(payload)
+    }
+
+    function setOilTemp(payload) {
+        valueSource.oilTemp = parseFloat(payload)
+    }
+
+    function setCoolantTemp(payload) {
+        valueSource.coolantTemp = parseFloat(payload)
+    }
+
+    function setWarnsignal(payload) {
+        valueSource.waning =
+                (payload === 'True' || payload === 'true') ? true : false
+    }
+
+    function setMotorWarning(payload) {
+        valueSource.motor =
+                (parseInt(payload) !== 0) ? true : false
+    }
+
+    function setBatteryWarning(payload) {
+        valueSource.battery =
+                (payload === 'True' || payload === 'true') ? true : false
+    }
+
+    function setOilWarning(payload) {
+        valueSource.oilWarning =
+                (payload === 'True' || payload === 'true') ? true : false
+    }
+
+    function setCoolantWarning(payload) {
+        valueSource.coolantWarning =
+                (payload === 'True' || payload === 'true') ? true : false
     }
 
     // Instantiation of qmlmqttclient
@@ -74,6 +158,52 @@ ApplicationWindow {
             maxrpmSubscription = mqttclient.subscribe("car/MaxRPM")//
             maxrpmSubscription.messageReceived.connect(setMaxRpm)
 
+            fuelSubscription = mqttclient.subscribe("car/Fuel")//
+            fuelSubscription.messageReceived.connect(setFuel)
+
+            blinkerSubscription = mqttclient.subscribe("car/Blink")//
+            blinkerSubscription.messageReceived(setBlinker)
+
+            handbrakeSubscription = mqttclient.subscribe("car/HandbrakeActivated")//
+            handbrakeSubscription.messageReceived.connect(setHandbrake)
+
+            // Lights
+            lightSubscription = mqttclient.subscribe("car/Light")//
+            lightSubscription.messageReceived.connect(setLight)
+
+            highbeamSubscription = mqttclient.subscribe("car/Fullbeam")//
+            highbeamSubscription.messageReceived(setHighbeam)
+
+            foglightSubscription = mqttclient.subscribe("car/FogLamp")//
+            foglightSubscription.messageReceived.connect(setFoglight)
+
+            // Temps
+            outsideTempSubscription = mqttclient.subscribe("car/OutsideTemperature")//
+            outsideTempSubscription.messageReceived.connect(setOutsideTemp)
+
+            oilTempSubscription = mqttclient.subscribe("car/OilTemperature")//
+            oilTempSubscription.messageReceived.connect(setOilTemp)
+
+            coolantTempSubscription = mqttclient.subscribe("car/CoolantTemperature")//
+            coolantTempSubscription.messageReceived.connect(setCoolantTemp)
+
+            // Warnings
+            warnsignalSubscription = mqttclient.subscribe("car/Warnsignal")//
+            warnsignalSubscription.messageReceived.connect(setWarnsignal)
+
+            oilSubscription = mqttclient.subscribe("car/WarnSignalOilLevel")//
+            oilSubscription.messageReceived.connect(setOilWarning)
+
+            coolantSubscription = mqttclient.subscribe("car/WarnSignalCoolantTemperature")//
+            coolantSubscription.messageReceived.connect(setCoolantWarning)
+
+
+
+
+
+
+            // Test
+            //valueSource.allLightsOn();
         }
     }
 
@@ -295,7 +425,7 @@ ApplicationWindow {
 
         }
 
-/*
+        /*
         DropShadow {
             id: loginBackgroundDS
             anchors.fill: loginBackground
@@ -345,18 +475,42 @@ ApplicationWindow {
                 enabled: mqttclient.state === MqttClient.Disconnected
             }
 
-            Button {
-                id: connectButton
-                text: mqttclient.state === MqttClient.Connected ? "Disconnect" : "Connect"
+            RowLayout {
+                id: rowLayout1
+                x: 0
+                width: 200
+                height: 100
+                Layout.fillHeight: false
+                transformOrigin: Item.Center
+                Layout.fillWidth: false
+                spacing: 20
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                onClicked: {
-                    if (mqttclient.state === MqttClient.Connected)
-                        mqttclient.disconnectFromHost()
-                    else {
-                        mqttclient.connectToHost()
+
+                Button {
+                    id: connectButton
+                    width: 70
+                    text: mqttclient.state === MqttClient.Connected ? "Disconnect" : "Connect"
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    onClicked: {
+                        if (mqttclient.state === MqttClient.Connected)
+                            mqttclient.disconnectFromHost()
+                        else {
+                            mqttclient.connectToHost()
+                        }
+                    }
+                }
+
+                Button {
+                    id: closeButton
+                    width: 70
+                    text: qsTr("Close")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    onClicked: {
+                        mqttLogin.visible = false
                     }
                 }
             }
+
 
 
         }
@@ -368,13 +522,22 @@ ApplicationWindow {
 
         // Press escape key to quit application
         Keys.onPressed: {
-            if (event.key === Qt.Key_Escape)
-                Qt.quit()
-
             if ((event.modifiers & Qt.ControlModifier) && (event.key === Qt.Key_L))
                 mqttLogin.visible = !mqttLogin.visible
-
+            if ((event.modifiers & Qt.ControlModifier) & (event.key === Qt.Key_D))
+                allLightsOn()
+            if ((event.modifiers & Qt.ControlModifier) & (event.key === Qt.Key_F))
+                allLightsOff()
         }
+
+        Keys.onEscapePressed: {
+            console.debug("esc")
+            Qt.quit()
+        }
+    }
+
+    ValueSource {
+        id: valueSource
     }
 
 
