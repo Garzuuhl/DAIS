@@ -14,8 +14,8 @@ ApplicationWindow {
     flags: Qt.FramelessWindowHint
     visible: true
     visibility: Window.Windowed
-    width: screen.width
-    height: screen.height
+    width: 1920 // screen.width
+    height: 1080 // screen.height
     color: "#393939"
     title: "DAIS - Dashboard"
 
@@ -516,24 +516,28 @@ ApplicationWindow {
         }
     }
 
-    Rectangle {
-        id: keyboardArea
-        focus: true
+    Shortcut {
+        sequence: "Ctrl+L"
+        context: Qt.ApplicationShortcut
+        onActivated: mqttLogin.visible = !mqttLogin.visible
+    }
 
-        // Press escape key to quit application
-        Keys.onPressed: {
-            if ((event.modifiers & Qt.ControlModifier) && (event.key === Qt.Key_L))
-                mqttLogin.visible = !mqttLogin.visible
-            if ((event.modifiers & Qt.ControlModifier) & (event.key === Qt.Key_D))
-                allLightsOn()
-            if ((event.modifiers & Qt.ControlModifier) & (event.key === Qt.Key_F))
-                allLightsOff()
-        }
+    Shortcut {
+        sequence: "Ctrl+D"
+        context: Qt.ApplicationShortcut
+        onActivated: valueSource.allLightsOn()
+    }
 
-        Keys.onEscapePressed: {
-            console.debug("esc")
-            Qt.quit()
-        }
+    Shortcut {
+        sequence: "Ctrl+F"
+        context: Qt.ApplicationShortcut
+        onActivated: valueSource.allLightsOff()
+    }
+
+    Shortcut {
+        sequence: "Ctrl+Q"
+        context: Qt.ApplicationShortcut
+        onActivated: Qt.quit()
     }
 
     ValueSource {
