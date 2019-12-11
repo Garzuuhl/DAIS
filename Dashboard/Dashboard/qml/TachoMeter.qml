@@ -1,11 +1,11 @@
-import QtQuick 2.0
+import QtQuick 2.3
 import QtQuick.Controls 2.12
+import QtQuick.Shapes 1.12
 import QtGraphicalEffects 1.0
 
 Item {
-    id: rectangle
-    clip: false
-    transformOrigin: Item.Left
+    id: tachometer
+    transformOrigin: Item.Center
     z: 1
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.verticalCenter: parent.verticalCenter
@@ -49,14 +49,36 @@ Item {
         width: 650
         height: 650
         anchors.fill: parent
-        visible: true
-        clip: false
         z: 1
         enabled: true
         smooth: true
         antialiasing: true
         fillMode: Image.PreserveAspectFit
         source: "../background/tachometer.svg"
+    }
+
+
+    Item {
+        id: fill_container
+        z: 2
+        anchors.fill: parent
+        Image {
+            id: tacho_fill
+            fillMode: Image.PreserveAspectFit
+            source: "../background/tachometer_fill.svg"
+        }
+
+        Shape {
+            id: tacho_mask
+        }
+
+        OpacityMask {
+            anchors.fill: parent
+            source: tacho_fill
+            maskSource: tacho_mask
+        }
+
+
     }
 
     Image {
@@ -72,7 +94,7 @@ Item {
         anchors.fill: parent
         visible: true
         clip: false
-        z: 1
+        z: 2
         enabled: true
         smooth: true
         antialiasing: true
@@ -249,6 +271,8 @@ Item {
         font.pointSize: 32
     }
 
+
+
 }
 
 
@@ -259,8 +283,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;height:650;width:650}D{i:7;anchors_x:115;anchors_y:420}D{i:8;anchors_x:80;anchors_y:295}
-D{i:9;anchors_x:115;anchors_y:175}D{i:10;anchors_x:200;anchors_y:100}D{i:11;anchors_y:70}
-D{i:12;anchors_y:100}D{i:13;anchors_y:175}D{i:14;anchors_y:295}D{i:15;anchors_y:420}
+    D{i:0;height:650;width:650}D{i:1;invisible:true}
 }
 ##^##*/
