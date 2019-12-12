@@ -253,6 +253,8 @@ ApplicationWindow {
                 y: 0
                 width: 650
                 height: 650
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenterOffset: 160
                 anchors.horizontalCenterOffset: 25
                 clip: false

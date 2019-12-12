@@ -1,14 +1,14 @@
-import QtQuick 2.3
-import QtQuick.Controls 2.12
+import QtQuick 2.12
 import QtQuick.Shapes 1.12
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.12
+import QtQuick.Extras 1.4
+
+import "MathHelper.js" as MathHelper
+
+
 
 Item {
     id: tachometer
-    transformOrigin: Item.Center
-    z: 1
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.verticalCenter: parent.verticalCenter
 
     Rectangle {
        id: gearRing
@@ -48,8 +48,9 @@ Item {
         id: tacho_hintergrund
         width: 650
         height: 650
+        visible: true
+        z: 0
         anchors.fill: parent
-        z: 1
         enabled: true
         smooth: true
         antialiasing: true
@@ -57,29 +58,52 @@ Item {
         source: "../background/tachometer.svg"
     }
 
+    // Fill-begin
 
-    Item {
-        id: fill_container
-        z: 2
+    Image {
+        id: tacho_fill
+        visible: false
         anchors.fill: parent
-        Image {
-            id: tacho_fill
-            fillMode: Image.PreserveAspectFit
-            source: "../background/tachometer_fill.svg"
-        }
+        fillMode: Image.PreserveAspectFit
+        source: "../background/tachometer_fill.svg"
+        sourceSize: Qt.size(parent.width, parent.height)
+    }
 
-        Shape {
-            id: tacho_mask
-        }
+    ConicalGradient {
+        id: tacho_mask_grad
+        visible: false
+        anchors.fill: tacho_fill
+        angle: -135.0
 
-        OpacityMask {
-            anchors.fill: parent
-            source: tacho_fill
-            maskSource: tacho_mask
-        }
+/*
 
+0 = 0.040000006
+8 = 0.708333333
+*/
+
+
+
+        gradient:
+            Gradient {
+                GradientStop { position: 0.0; color: "transparent" }
+                GradientStop { position: MathHelper.map_range(valueSource.rpm, 0, 8000, 0.040000006, 0.708333333); color: "transparent" }
+                GradientStop { position: MathHelper.map_range(valueSource.rpm, 0, 8000, 0.040000006, 0.708333333) + 0.000000001; color: "white" }
+                GradientStop { position: 1.0; color: "white" }
+            }
 
     }
+
+
+    OpacityMask {
+        invert: true
+        anchors.fill: tacho_mask_grad
+        source: tacho_fill
+        maskSource: tacho_mask_grad
+    }
+
+
+    // Fill-end
+
 
     Image {
         id: tacho_drehzahl
@@ -270,6 +294,7 @@ Item {
         font.family: "Roboto"
         font.pointSize: 32
     }
+
 
 
 

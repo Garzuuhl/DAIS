@@ -26,7 +26,7 @@ Item {
 
     function allLightsOn() {
         console.log("allLightsOn")
-        valueSource.kph = 100
+        valueSource.kph = 130
         valueSource.rpm = 5000
         valueSource.gear = "10"
         //valueSource.maxrpm = 10000
@@ -66,3 +66,9 @@ Item {
         valueSource.coolantWarning = false
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
