@@ -6,7 +6,7 @@ Item {
     property real kph: 0
     property real rpm: 0
     property string gear: "0"
-    property real maxrpm: 10000
+    //property real maxrpm: 10000
     property real fuel: 0.5
     property int blinker: 0     // left: -1 | right: 1
     property bool warning: false
@@ -14,9 +14,9 @@ Item {
     property bool light: false
     property bool highbeam: false
     property bool foglight: false
-    property real outsideTemp: 0
-    property real oilTemp: 0
-    property real coolantTemp: 0
+    property real outsideTemp: 20
+    property real oilTemp: 75
+    property real coolantTemp: 80
     property bool motor: false
     property bool battery: false
     property bool oilWarning: false
@@ -31,6 +31,7 @@ Item {
         valueSource.gear = "10"
         //valueSource.maxrpm = 10000
         valueSource.fuel = 0.1
+        valueSource.blinker = -1
         valueSource.warning = true
         valueSource.handbrake = true
         valueSource.light = true
@@ -52,6 +53,7 @@ Item {
         valueSource.gear = "0"
         //valueSource.maxrpm = 10000
         valueSource.fuel = 0.5
+        valueSource.blinker = 0
         valueSource.warning = false
         valueSource.handbrake = false
         valueSource.light = false

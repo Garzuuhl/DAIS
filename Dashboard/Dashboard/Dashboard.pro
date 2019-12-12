@@ -35,6 +35,7 @@ HEADERS += \
     qmlmqttclient.hpp
 
 DISTFILES += \
+    qml/TempWasser.qml \
     qml/dashboard.qml \
     qml/FuelSystem.qml \
     qml/LeftSignals.qml \

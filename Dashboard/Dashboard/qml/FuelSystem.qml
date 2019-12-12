@@ -19,7 +19,23 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             fillMode: Image.PreserveAspectFit
             source: "../background/fuel-filling.svg"
-            visible: valueSource.fuel <= 0.2
+        }
+
+        Timer {
+            id: fuel_icon_timer1
+            interval: 500
+            running: valueSource.fuel <= 0.2
+            repeat: true
+            onTriggered: {
+                fuelIcon.visible = false
+                fuel_icon_timer2.start()
+            }
+        }
+
+        Timer {
+            id: fuel_icon_timer2
+            interval: 500
+            onTriggered: fuelIcon.visible = true
         }
 
         Text {

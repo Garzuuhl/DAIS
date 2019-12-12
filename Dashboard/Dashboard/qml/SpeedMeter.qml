@@ -39,7 +39,7 @@ Item {
        Text {
            id: speedStatus
            color: "#ef7d25"
-           text: qsTr("0")
+           text: qsTr("%1").arg(valueSource.kph)
            anchors.horizontalCenter: parent.horizontalCenter
            anchors.verticalCenter: parent.verticalCenter
            style: Text.Raised
