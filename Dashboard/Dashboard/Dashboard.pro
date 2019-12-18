@@ -1,4 +1,4 @@
-QT += quick mqtt
+QT += quick mqtt network positioning location widgets
 
 CONFIG += c++11
 

@@ -19,6 +19,37 @@ ApplicationWindow {
     color: "#393939"
     title: "DAIS - Dashboard"
 
+    // Resizing QML window: https://stackoverflow.com/questions/18927534/qtquick2-dragging-frameless-window
+    MouseArea {
+        anchors.fill: parent
+
+        property variant clickPos: "1,1"
+
+        onPressed: {
+            clickPos  = Qt.point(mouse.x,mouse.y)
+        }
+
+        onPositionChanged: {
+            var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
+            var new_x = appWindow.x + delta.x;
+            var new_y = appWindow.y + delta.y;
+
+            if (new_y <= 0) {
+                appWindow.visibility = Window.Maximized;
+            }
+            else
+            {
+                if (appWindow.visibility === Window.Maximized) {
+                    appWindow.visibility = Window.Windowed
+                }
+                appWindow.x = new_x
+                appWindow.y = new_y
+            }
+        }
+
+
+    }
+
     // Different properties holding Subscriptions of type QMqttTopicFilter*
     property var kphSubscription: 0
     property var gearSubscription: 0
