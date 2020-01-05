@@ -11,7 +11,7 @@ import MqttClient 1.0
 
 ApplicationWindow {
     id: root
-    flags: Qt.FramelessWindowHint
+    flags: flags | Qt.FramelessWindowHint
     visible: true
     visibility: Window.Windowed
     width: 1920 // screen.width
@@ -31,19 +31,19 @@ ApplicationWindow {
 
         onPositionChanged: {
             var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
-            var new_x = appWindow.x + delta.x;
-            var new_y = appWindow.y + delta.y;
+            var new_x = root.x + delta.x;
+            var new_y = root.y + delta.y;
 
             if (new_y <= 0) {
-                appWindow.visibility = Window.Maximized;
+                root.visibility = Window.Maximized;
             }
             else
             {
-                if (appWindow.visibility === Window.Maximized) {
-                    appWindow.visibility = Window.Windowed
+                if (root.visibility === Window.Maximized) {
+                    root.visibility = Window.Windowed
                 }
-                appWindow.x = new_x
-                appWindow.y = new_y
+                root.x = new_x
+                root.y = new_y
             }
         }
 
