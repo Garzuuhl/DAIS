@@ -21,6 +21,23 @@ Item {
             source: "../background/fuel-filling.svg"
         }
 
+        Timer {
+            id: fuel_icon_timer1
+            interval: 500
+            running: valueSource.fuel <= 0.2
+            repeat: true
+            onTriggered: {
+                fuelIcon.visible = false
+                fuel_icon_timer2.start()
+            }
+        }
+
+        Timer {
+            id: fuel_icon_timer2
+            interval: 500
+            onTriggered: fuelIcon.visible = true
+        }
+
         Text {
             id: fuelStatus
             y: 7
@@ -64,7 +81,7 @@ Item {
         id: fuel_anzeige_0
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 0.125
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         gradient: Gradient {
@@ -85,7 +102,7 @@ Item {
         id: fuel_anzeige_1
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 0.25
         anchors.left: fuel_anzeige_0.right
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
@@ -108,7 +125,7 @@ Item {
         id: fuel_anzeige_2
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 0.375
         anchors.left: fuel_anzeige_1.right
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
@@ -131,7 +148,7 @@ Item {
         id: fuel_anzeige_3
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 0.5
         anchors.left: fuel_anzeige_2.right
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
@@ -154,7 +171,7 @@ Item {
         id: fuel_anzeige_4
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 0.625
         anchors.left: fuel_anzeige_3.right
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
@@ -177,7 +194,7 @@ Item {
         id: fuel_anzeige_5
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 0.75
         anchors.left: fuel_anzeige_4.right
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
@@ -200,7 +217,7 @@ Item {
         id: fuel_anzeige_6
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 0.875
         anchors.left: fuel_anzeige_5.right
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom
@@ -223,7 +240,7 @@ Item {
         id: fuel_anzeige_7
         width: 250/8
         height: 30
-        visible: true
+        visible: valueSource.fuel >= 1
         anchors.left: fuel_anzeige_6.right
         anchors.leftMargin: 0
         anchors.bottom: parent.bottom

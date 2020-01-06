@@ -1,14 +1,14 @@
-import QtQuick 2.0
-import QtQuick.Controls 2.12
-import QtGraphicalEffects 1.0
+import QtQuick 2.12
+import QtQuick.Shapes 1.12
+import QtGraphicalEffects 1.12
+import QtQuick.Extras 1.4
+
+import "MathHelper.js" as MathHelper
+
+
 
 Item {
-    id: rectangle
-    clip: false
-    transformOrigin: Item.Left
-    z: 1
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.verticalCenter: parent.verticalCenter
+    id: tachometer
 
     Rectangle {
        id: gearRing
@@ -32,7 +32,7 @@ Item {
        Text {
            id: gearStatus
            color: "#ef7d25"
-           text: qsTr("D1")
+           text: qsTr("%1").arg(valueSource.gear)
            anchors.horizontalCenter: parent.horizontalCenter
            anchors.verticalCenter: parent.verticalCenter
            style: Text.Raised
@@ -48,16 +48,62 @@ Item {
         id: tacho_hintergrund
         width: 650
         height: 650
-        anchors.fill: parent
         visible: true
-        clip: false
-        z: 1
+        z: 0
+        anchors.fill: parent
         enabled: true
         smooth: true
         antialiasing: true
         fillMode: Image.PreserveAspectFit
         source: "../background/tachometer.svg"
     }
+
+    // Fill-begin
+
+    Image {
+        id: tacho_fill
+        visible: false
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectFit
+        source: "../background/tachometer_fill.svg"
+        sourceSize: Qt.size(parent.width, parent.height)
+    }
+
+    ConicalGradient {
+        id: tacho_mask_grad
+        visible: false
+        anchors.fill: tacho_fill
+        angle: -135.0
+
+/*
+
+0 = 0.040000006
+8 = 0.708333333
+*/
+
+
+
+        gradient:
+            Gradient {
+                GradientStop { position: 0.0; color: "transparent" }
+                GradientStop { position: MathHelper.map_range(valueSource.rpm, 0, 8000, 0.040000006, 0.708333333); color: "transparent" }
+                GradientStop { position: MathHelper.map_range(valueSource.rpm, 0, 8000, 0.040000006, 0.708333333) + 0.000000001; color: "white" }
+                GradientStop { position: 1.0; color: "white" }
+            }
+
+    }
+
+
+    OpacityMask {
+        invert: true
+        anchors.fill: tacho_mask_grad
+        source: tacho_fill
+        maskSource: tacho_mask_grad
+    }
+
+
+    // Fill-end
+
 
     Image {
         id: tacho_drehzahl
@@ -72,7 +118,7 @@ Item {
         anchors.fill: parent
         visible: true
         clip: false
-        z: 1
+        z: 2
         enabled: true
         smooth: true
         antialiasing: true
@@ -249,6 +295,9 @@ Item {
         font.pointSize: 32
     }
 
+
+
+
 }
 
 
@@ -259,8 +308,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;height:650;width:650}D{i:7;anchors_x:115;anchors_y:420}D{i:8;anchors_x:80;anchors_y:295}
-D{i:9;anchors_x:115;anchors_y:175}D{i:10;anchors_x:200;anchors_y:100}D{i:11;anchors_y:70}
-D{i:12;anchors_y:100}D{i:13;anchors_y:175}D{i:14;anchors_y:295}D{i:15;anchors_y:420}
+    D{i:0;height:650;width:650}D{i:1;invisible:true}
 }
 ##^##*/

@@ -38,5 +38,8 @@
         <file>qml/FuelSystem.qml</file>
         <file>qml/Media.qml</file>
         <file>background/random_music_cover.jpg</file>
+        <file>qml/ValueSource.qml</file>
+        <file>background/tachometer_fill.svg</file>
+        <file>qml/MathHelper.js</file>
     </qresource>
 </RCC>

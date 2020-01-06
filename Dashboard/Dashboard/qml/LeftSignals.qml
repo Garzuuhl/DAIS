@@ -13,7 +13,7 @@ Item {
         id: turnSignal_left
         width: 50
         height: 50
-        visible: true
+        visible: valueSource.blinker === -1
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.right: parent.right
@@ -28,11 +28,11 @@ Item {
         y: 168
         width: 50
         height: 50
+        visible: valueSource.highbeam
         anchors.horizontalCenterOffset: 25
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 50
         anchors.horizontalCenter: parent.horizontalCenter
-        visible: true
         fillMode: Image.PreserveAspectFit
         source: "../background/high-beam.svg"
     }
@@ -43,11 +43,11 @@ Item {
         y: 168
         width: 50
         height: 50
+        visible: valueSource.foglight
         anchors.horizontalCenterOffset: -125
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        visible: true
         fillMode: Image.PreserveAspectFit
         source: "../background/fog-light.svg"
     }
@@ -58,11 +58,11 @@ Item {
         y: 168
         width: 50
         height: 50
+        visible: valueSource.light
         anchors.horizontalCenterOffset: 175
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        visible: true
         fillMode: Image.PreserveAspectFit
         source: "../background/low-beam.svg"
     }

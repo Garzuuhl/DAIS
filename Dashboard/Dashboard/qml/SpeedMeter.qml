@@ -2,6 +2,10 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.0
 
+import "MathHelper.js" as MathHelper
+
+
+
 Item {
     id: rectangle
     width: 600
@@ -35,7 +39,7 @@ Item {
        Text {
            id: speedStatus
            color: "#ef7d25"
-           text: qsTr("0")
+           text: qsTr("%1").arg(valueSource.kph)
            anchors.horizontalCenter: parent.horizontalCenter
            anchors.verticalCenter: parent.verticalCenter
            style: Text.Raised
@@ -54,13 +58,58 @@ Item {
         anchors.fill: parent
         visible: true
         clip: false
-        z: 1
         enabled: true
         smooth: true
         antialiasing: true
         fillMode: Image.PreserveAspectFit
         source: "../background/tachometer.svg"
     }
+
+    // Fill-begin
+
+    Image {
+        id: tacho_fill
+        visible: false
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectFit
+        source: "../background/tachometer_fill.svg"
+        sourceSize: Qt.size(parent.width, parent.height)
+    }
+
+    ConicalGradient {
+        id: tacho_mask_grad
+        visible: false
+        anchors.fill: tacho_fill
+        angle: -135.0
+
+/*
+
+0 = 0.040000006
+160 = 0.708333333
+*/
+
+
+
+        gradient:
+            Gradient {
+                GradientStop { position: 0.0; color: "transparent" }
+                GradientStop { position: MathHelper.map_range(valueSource.kph, 0, 160, 0.040000006, 0.708333333); color: "transparent" }
+                GradientStop { position: MathHelper.map_range(valueSource.kph, 0, 160, 0.040000006, 0.708333333) + 0.000000001; color: "white" }
+                GradientStop { position: 1.0; color: "white" }
+            }
+
+    }
+
+
+    OpacityMask {
+        invert: true
+        anchors.fill: tacho_mask_grad
+        source: tacho_fill
+        maskSource: tacho_mask_grad
+    }
+
+
+    // Fill-end
 
     Image {
         id: tacho_gewschwindigkeit

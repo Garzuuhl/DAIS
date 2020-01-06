@@ -13,7 +13,7 @@ Item {
         id: turnSignal_right
         width: 50
         height: 50
-        visible: true
+        visible: valueSource.blinker === 1
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.left: parent.left
@@ -28,11 +28,11 @@ Item {
         y: 168
         width: 50
         height: 50
+        visible: valueSource.motor
         anchors.horizontalCenterOffset: -25
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 50
         anchors.horizontalCenter: parent.horizontalCenter
-        visible: true
         fillMode: Image.PreserveAspectFit
         source: "../background/malfunction-indicador.svg"
     }
@@ -43,11 +43,11 @@ Item {
         y: 168
         width: 50
         height: 50
+        visible: valueSource.handbrake
         anchors.horizontalCenterOffset: -175
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        visible: true
         fillMode: Image.PreserveAspectFit
         source: "../background/brake-system-warning.svg"
     }
@@ -58,11 +58,11 @@ Item {
         y: 168
         width: 50
         height: 50
+        visible: valueSource.battery
         anchors.horizontalCenterOffset: 125
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        visible: true
         fillMode: Image.PreserveAspectFit
         source: "../background/battery.svg"
     }
