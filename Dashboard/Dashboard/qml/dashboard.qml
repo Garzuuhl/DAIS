@@ -363,8 +363,9 @@ ApplicationWindow {
                 }
             }
 
-            Media {
-                id: media
+            //Changable to Media.qml or CarStatus.qml
+            CarStatus {
+                id: carstatus
                 x: 0
                 y: 0
                 width: 500

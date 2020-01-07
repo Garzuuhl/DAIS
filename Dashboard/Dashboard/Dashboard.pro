@@ -35,6 +35,7 @@ HEADERS += \
     qmlmqttclient.hpp
 
 DISTFILES += \
+    qml/CarStatus.qml \
     qml/TempWasser.qml \
     qml/dashboard.qml \
     qml/FuelSystem.qml \

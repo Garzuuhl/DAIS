@@ -41,5 +41,7 @@
         <file>qml/ValueSource.qml</file>
         <file>background/tachometer_fill.svg</file>
         <file>qml/MathHelper.js</file>
+        <file>qml/CarStatus.qml</file>
+        <file>background/car-top-view-icon.png</file>
     </qresource>
 </RCC>
