@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="118" height="78" viewBox="0 0 118 78">
+  <defs>
+    <filter id="backspace" x="0" y="0" width="118" height="78" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#272727"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#backspace)">
+    <path id="backspace-2" data-name="backspace" d="M90,64H32.067a10,10,0,0,0-7.073,2.931L1.46,90.464a5,5,0,0,0,0,7.07L25,121.07a10,10,0,0,0,7.07,2.93H90a10,10,0,0,0,10-10V74A10,10,0,0,0,90,64ZM76.762,103.7a2.5,2.5,0,0,1,0,3.536l-3.534,3.534a2.5,2.5,0,0,1-3.536,0l-9.7-9.7-9.7,9.7a2.5,2.5,0,0,1-3.536,0l-3.534-3.534a2.5,2.5,0,0,1,0-3.536l9.7-9.7-9.7-9.7a2.5,2.5,0,0,1,0-3.536l3.534-3.534a2.5,2.5,0,0,1,3.536,0l9.7,9.7,9.7-9.7a2.5,2.5,0,0,1,3.536,0l3.534,3.534a2.5,2.5,0,0,1,0,3.536l-9.7,9.7Z" transform="translate(9.01 -58)" fill="#fff"/>
+  </g>
+</svg>
