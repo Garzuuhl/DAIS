@@ -14,7 +14,7 @@ Item {
         anchors.bottomMargin: 25
         anchors.left: parent.left
         anchors.leftMargin: 50
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -28,7 +28,7 @@ Item {
         anchors.bottomMargin: 25
         anchors.right: parent.right
         anchors.rightMargin: 50
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -42,7 +42,7 @@ Item {
         anchors.bottomMargin: 25
         anchors.left: parent.left
         anchors.leftMargin: 50
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -56,7 +56,7 @@ Item {
         anchors.bottomMargin: 25
         anchors.right: parent.right
         anchors.rightMargin: 50
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -70,7 +70,7 @@ Item {
         anchors.leftMargin: 50
         anchors.bottom: kmzaehler_aktuell_text.top
         anchors.bottomMargin: 25
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -84,7 +84,7 @@ Item {
         anchors.rightMargin: 50
         anchors.bottom: kmzaehler_aktuell_value.top
         anchors.bottomMargin: 25
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -109,7 +109,7 @@ Item {
         anchors.topMargin: 75
         anchors.left: parent.left
         anchors.leftMargin: 75
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -124,7 +124,7 @@ Item {
         anchors.topMargin: 75
         anchors.right: parent.right
         anchors.rightMargin: 75
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -139,7 +139,7 @@ Item {
         anchors.topMargin: 300
         anchors.left: parent.left
         anchors.leftMargin: 75
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
@@ -154,7 +154,7 @@ Item {
         anchors.topMargin: 300
         anchors.right: parent.right
         anchors.rightMargin: 75
-        color: "#ffffff"
+        color: "#ef7d25"
         font.pointSize: 20
         style: Text.Raised
         font.weight: Font.Bold
