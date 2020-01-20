@@ -353,19 +353,31 @@ ApplicationWindow {
                     x: 0
                     y: 0
                     color: "#ef7d25"
-                    text: qsTr("20:30")
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pointSize: 28
                     style: Text.Raised
                     font.weight: Font.Bold
                     font.family: "Roboto"
+                    function set() {
+                        time.text = qsTr("%1").arg(new Date().toLocaleTimeString(Qt.locale("de_DE"), "hh:mm"))
+                    }
+                }
+
+                Timer {
+                    id: timeUpdate
+                    interval: 1000
+                    repeat: true
+                    running: true
+                    triggeredOnStart: true
+                    onTriggered: time.set()
                 }
             }
 
             //Changable to Media.qml or CarStatus.qml
             CarStatus {
                 id: carstatus
+                visible: true
                 x: 0
                 y: 0
                 width: 500
@@ -373,6 +385,15 @@ ApplicationWindow {
                 anchors.top: parent.top
                 anchors.topMargin: 225
                 anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Media {
+                id: media
+                visible: false
+                x: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: 225
             }
 
             FuelSystem {
@@ -386,6 +407,7 @@ ApplicationWindow {
                 anchors.bottomMargin: 100
                 anchors.horizontalCenter: parent.horizontalCenter
             }
+
         }
 
         Item {
@@ -574,6 +596,15 @@ ApplicationWindow {
         onActivated: Qt.quit()
     }
 
+    Shortcut {
+        sequences: ["Ctrl+Left", "Ctrl+Right"]
+        context: Qt.ApplicationShortcut
+        onActivated: {
+            carstatus.visible = !carstatus.visible
+            media.visible = !media.visible
+        }
+    }
+
     ValueSource {
         id: valueSource
     }
@@ -584,6 +615,7 @@ ApplicationWindow {
 
 /*##^##
 Designer {
-    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:21;invisible:true}
+    D{i:0;height:1080;width:1920}D{i:2;anchors_height:100;anchors_width:100}D{i:18;anchors_y:267;invisible:true}
+D{i:22;invisible:true}D{i:23;invisible:true}
 }
 ##^##*/
