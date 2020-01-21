@@ -15,18 +15,47 @@ import MqttClient 1.0
 
 
 ApplicationWindow {
-
-
-
-
-
     id: applicationWindow
     visible: true
-    flags: Qt.FramelessWindowHint
+    flags: flags | Qt.FramelessWindowHint
     width: 1080
     height: 1920
     color: "#ffffff"
     title: qsTr("Infotainment")
+
+/*
+    // Resizing QML window: https://stackoverflow.com/questions/18927534/qtquick2-dragging-frameless-window
+    MouseArea {
+        anchors.fill: parent
+
+        property variant clickPos: "1,1"
+
+        onPressed: {
+            clickPos  = Qt.point(mouse.x,mouse.y)
+        }
+
+        onPositionChanged: {
+            var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
+            var new_x = applicationWindow.x + delta.x;
+            var new_y = applicationWindow.y + delta.y;
+
+            if (new_y <= 0) {
+                applicationWindow.visibility = Window.Maximized;
+            }
+            else
+            {
+                if (applicationWindow.visibility === Window.Maximized) {
+                    applicationWindow.visibility = Window.Windowed
+                }
+                applicationWindow.x = new_x
+                applicationWindow.y = new_y
+            }
+        }
+
+
+    }
+
+*/
 
 
     //Variablen
@@ -2618,7 +2647,11 @@ color: '#FFFFFF'
 
     }
 
-
+    Shortcut {
+        sequence: "Ctrl+Q"
+        context: Qt.ApplicationShortcut
+        onActivated: Qt.quit()
+    }
 
 }
 

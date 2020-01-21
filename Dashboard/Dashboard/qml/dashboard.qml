@@ -17,7 +17,7 @@ ApplicationWindow {
     width: 1920 // screen.width
     height: 1080 // screen.height
     color: "#393939"
-    title: "DAIS - Dashboard"
+    title: qsTr("DAIS - Dashboard")
 
     // Resizing QML window: https://stackoverflow.com/questions/18927534/qtquick2-dragging-frameless-window
     MouseArea {
