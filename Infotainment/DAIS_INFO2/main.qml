@@ -17,45 +17,15 @@ import MqttClient 1.0
 ApplicationWindow {
     id: applicationWindow
     visible: true
-    flags: flags | Qt.FramelessWindowHint
+    flags:  Qt.FramelessWindowHint
     width: 1080
     height: 1920
     color: "#ffffff"
     title: qsTr("Infotainment")
 
-/*
-    // Resizing QML window: https://stackoverflow.com/questions/18927534/qtquick2-dragging-frameless-window
-    MouseArea {
-        anchors.fill: parent
-
-        property variant clickPos: "1,1"
-
-        onPressed: {
-            clickPos  = Qt.point(mouse.x,mouse.y)
-        }
-
-        onPositionChanged: {
-            var delta = Qt.point(mouse.x-clickPos.x, mouse.y-clickPos.y)
-            var new_x = applicationWindow.x + delta.x;
-            var new_y = applicationWindow.y + delta.y;
-
-            if (new_y <= 0) {
-                applicationWindow.visibility = Window.Maximized;
-            }
-            else
-            {
-                if (applicationWindow.visibility === Window.Maximized) {
-                    applicationWindow.visibility = Window.Windowed
-                }
-                applicationWindow.x = new_x
-                applicationWindow.y = new_y
-            }
-        }
 
 
-    }
 
-*/
 
 
     //Variablen
@@ -89,8 +59,8 @@ ApplicationWindow {
     property int phonecalllengthcounter:0
     //Navigation
     property int mapcounter:0
-    property var destinationlat:0.0
-    property var destinationlon:0.0
+    property var destinationlat:49.4472309
+    property var destinationlon:7.7555738
     property var routeupdatecounter:0
 
     //Heizung
@@ -1945,6 +1915,7 @@ id:mapcircle1
                     height: 300
                     text: qsTr("Button")
                     opacity: 0
+                      onClicked:{flickable.interactive=false; flickable.contentY=1920;flickable.contentX=0;swipeView.currentIndex = swipeView.currentIndex=4}
                 }
             }
 
