@@ -14,8 +14,8 @@ ApplicationWindow {
     flags: flags | Qt.FramelessWindowHint
     visible: true
     visibility: Window.Windowed
-    width: 1920 // screen.width
-    height: 1080 // screen.height
+    width: 1920
+    height: 1080
     color: "#393939"
     title: qsTr("DAIS - Dashboard")
 
@@ -481,19 +481,6 @@ ApplicationWindow {
 
         }
 
-        /*
-        DropShadow {
-            id: loginBackgroundDS
-            anchors.fill: loginBackground
-            horizontalOffset: 0
-            verticalOffset: 0
-            radius: 8.0
-            samples: 17
-            color: "#80000000"
-            source: loginBackground
-            transparentBorder: true
-        }
-*/
         ColumnLayout {
             id: loginLayout
             width: 300

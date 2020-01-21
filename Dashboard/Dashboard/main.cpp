@@ -3,7 +3,7 @@
 #include <QtGui/QFont>
 #include <QtGui/QFontDatabase>
 #include <QtMqtt/QtMqtt>
-#include<QDebug>
+#include <QDebug>
 
 
 #include "qmlmqttclient.hpp"
