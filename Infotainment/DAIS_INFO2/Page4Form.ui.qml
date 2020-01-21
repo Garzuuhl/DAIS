@@ -35,7 +35,15 @@ Page{
         height:1920
         width:1080
         color:'#888483'
+
+
+
+
+
+
 }
+
+
 
 
 
@@ -61,16 +69,7 @@ Page{
 
 
 
-Label {
-        text: qsTr("Page 1")
-        font.pixelSize: Qt.application.font.pixelSize * 2
-        padding: 10
-    }
 
-    Label {
-        text: qsTr("You are on Page 1.")
-        anchors.centerIn: parent
-    }
 
 
 //--------------------------------------------------------------------------------

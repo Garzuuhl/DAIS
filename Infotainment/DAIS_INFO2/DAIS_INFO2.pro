@@ -32,6 +32,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+#MQTT Include
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Desktop/build-qtmqtt-Desktop_Qt_5_13_2_MinGW_64_bit-Release/lib/ -lQt5Mqtt
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Desktop/build-qtmqtt-Desktop_Qt_5_13_2_MinGW_64_bit-Release/lib/ -lQt5Mqttd
 
@@ -44,13 +45,3 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Desktop/build-qtm
 INCLUDEPATH += $$PWD/../../Desktop/build-qtmqtt-Desktop_Qt_5_13_2_MinGW_64_bit-Release/include
 DEPENDPATH += $$PWD/../../Desktop/build-qtmqtt-Desktop_Qt_5_13_2_MinGW_64_bit-Release/include
 #open sslimport
-
-win32: LIBS += -L$$PWD/../../../../OpenSSL-Win64/lib/ -lssleay32
-
-INCLUDEPATH += $$PWD/../../../../OpenSSL-Win64/include
-DEPENDPATH += $$PWD/../../../../OpenSSL-Win64/include
-
-win32: LIBS += -L$$PWD/../../../../OpenSSL-Win64/lib/ -llibeay32
-
-INCLUDEPATH += $$PWD/../../../../OpenSSL-Win64/include
-DEPENDPATH += $$PWD/../../../../OpenSSL-Win64/include

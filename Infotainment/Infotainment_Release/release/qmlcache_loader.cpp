@@ -4,14 +4,15 @@
 
 static const unsigned char qt_resource_tree[] = {
 0,
-0,0,0,0,2,0,0,0,8,0,0,0,1,0,0,1,
-0,0,0,0,0,0,1,0,0,0,0,0,0,0,218,0,
-0,0,0,0,1,0,0,0,0,0,0,0,120,0,0,0,
-0,0,1,0,0,0,0,0,0,0,82,0,0,0,0,0,
-1,0,0,0,0,0,0,0,8,0,0,0,0,0,1,0,
-0,0,0,0,0,0,196,0,0,0,0,0,1,0,0,0,
-0,0,0,0,158,0,0,0,0,0,1,0,0,0,0,0,
-0,0,46,0,0,0,0,0,1,0,0,0,0};
+0,0,0,0,2,0,0,0,9,0,0,0,1,0,0,0,
+196,0,0,0,0,0,1,0,0,0,0,0,0,1,30,0,
+0,0,0,0,1,0,0,0,0,0,0,0,248,0,0,0,
+0,0,1,0,0,0,0,0,0,0,120,0,0,0,0,0,
+1,0,0,0,0,0,0,0,82,0,0,0,0,0,1,0,
+0,0,0,0,0,0,8,0,0,0,0,0,1,0,0,0,
+0,0,0,0,226,0,0,0,0,0,1,0,0,0,0,0,
+0,0,158,0,0,0,0,0,1,0,0,0,0,0,0,0,
+46,0,0,0,0,0,1,0,0,0,0};
 static const unsigned char qt_resource_names[] = {
 0,
 1,0,0,0,47,0,47,0,16,5,119,26,220,0,80,0,
@@ -26,13 +27,15 @@ static const unsigned char qt_resource_names[] = {
 46,0,117,0,105,0,46,0,113,0,109,0,108,0,16,11,
 58,38,124,0,65,0,100,0,100,0,114,0,101,0,115,0,
 115,0,77,0,111,0,100,0,101,0,108,0,46,0,113,0,
-109,0,108,0,8,8,1,90,92,0,109,0,97,0,105,0,
-110,0,46,0,113,0,109,0,108,0,16,4,183,26,220,0,
-80,0,97,0,103,0,101,0,52,0,70,0,111,0,114,0,
-109,0,46,0,117,0,105,0,46,0,113,0,109,0,108,0,
-16,4,151,26,220,0,80,0,97,0,103,0,101,0,53,0,
-70,0,111,0,114,0,109,0,46,0,117,0,105,0,46,0,
-113,0,109,0,108};
+109,0,108,0,12,0,248,96,156,0,77,0,80,0,51,0,
+77,0,111,0,100,0,101,0,108,0,46,0,113,0,109,0,
+108,0,8,8,1,90,92,0,109,0,97,0,105,0,110,0,
+46,0,113,0,109,0,108,0,16,4,183,26,220,0,80,0,
+97,0,103,0,101,0,52,0,70,0,111,0,114,0,109,0,
+46,0,117,0,105,0,46,0,113,0,109,0,108,0,16,4,
+151,26,220,0,80,0,97,0,103,0,101,0,53,0,70,0,
+111,0,114,0,109,0,46,0,117,0,105,0,46,0,113,0,
+109,0,108};
 static const unsigned char qt_resource_empty_payout[] = { 0, 0, 0, 0, 0 };
 QT_BEGIN_NAMESPACE
 extern Q_CORE_EXPORT bool qRegisterResourceData(int, const unsigned char *, const unsigned char *, const unsigned char *);
@@ -51,6 +54,12 @@ namespace _0x5f__Page4Form_ui_0x2e_qml {
     };
 }
 namespace _0x5f__main_qml { 
+    extern const unsigned char qmlData[];
+    const QQmlPrivate::CachedQmlUnit unit = {
+        reinterpret_cast<const QV4::CompiledData::Unit*>(&qmlData), nullptr, nullptr
+    };
+}
+namespace _0x5f__MP3Model_qml { 
     extern const unsigned char qmlData[];
     const QQmlPrivate::CachedQmlUnit unit = {
         reinterpret_cast<const QV4::CompiledData::Unit*>(&qmlData), nullptr, nullptr
@@ -103,6 +112,7 @@ Registry::Registry() {
         resourcePathToCachedUnit.insert(QStringLiteral("/Page5Form.ui.qml"), &QmlCacheGeneratedCode::_0x5f__Page5Form_ui_0x2e_qml::unit);
         resourcePathToCachedUnit.insert(QStringLiteral("/Page4Form.ui.qml"), &QmlCacheGeneratedCode::_0x5f__Page4Form_ui_0x2e_qml::unit);
         resourcePathToCachedUnit.insert(QStringLiteral("/main.qml"), &QmlCacheGeneratedCode::_0x5f__main_qml::unit);
+        resourcePathToCachedUnit.insert(QStringLiteral("/MP3Model.qml"), &QmlCacheGeneratedCode::_0x5f__MP3Model_qml::unit);
         resourcePathToCachedUnit.insert(QStringLiteral("/AddressModel.qml"), &QmlCacheGeneratedCode::_0x5f__AddressModel_qml::unit);
         resourcePathToCachedUnit.insert(QStringLiteral("/Page1Form.ui.qml"), &QmlCacheGeneratedCode::_0x5f__Page1Form_ui_0x2e_qml::unit);
         resourcePathToCachedUnit.insert(QStringLiteral("/Page3Form.ui.qml"), &QmlCacheGeneratedCode::_0x5f__Page3Form_ui_0x2e_qml::unit);

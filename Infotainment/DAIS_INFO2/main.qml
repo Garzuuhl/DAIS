@@ -56,10 +56,14 @@ ApplicationWindow {
     //Telefon
     property int maxDigits:20
     property int curDigits:0
+    property int phonecallcounter:0;
+    property int phonecalllengthcounter:0
     //Navigation
     property int mapcounter:0
     property var destinationlat:0.0
     property var destinationlon:0.0
+    property var routeupdatecounter:0
+
     //Heizung
     property var heatdialog:true
     property int heatfan:0
@@ -584,6 +588,8 @@ ApplicationWindow {
     function startMusic()
     {
 
+
+
         playmusic.play();
         imagePlayButton.source = "background/stop.png";
         miniplayButton.source="background/stop.png";
@@ -644,6 +650,24 @@ ApplicationWindow {
 
 
     }
+
+
+
+
+function drawMap(){
+
+
+aquery.clearWaypoints();
+routeModel.reset();
+aquery.addWaypoint(QtPositioning.coordinate(valueSource.latitude,valueSource.longitude));
+aquery.addWaypoint(QtPositioning.coordinate(destinationlat,destinationlon));
+map.center=QtPositioning.coordinate(destinationlat,destinationlon);
+mapcircle1.center=QtPositioning.coordinate(destinationlat,destinationlon);
+routeModel.update();
+drawmaptimer.start();
+
+//albumName.text=routeModel.status;
+}
 
 
 
@@ -874,7 +898,7 @@ ApplicationWindow {
                 onPressed: {
 
                     curSong++
-                    albumName.text=curSong+"    "+songCount +"  "+songTitles[2];
+
 
                     if(curSong>songCount){curSong=0;playmusic.source=songList[curSong];songName.text=songTitles[curSong] ;startMusic()}
                     if(curSong<=songCount) {playmusic.source=songList[curSong];songName.text=songTitles[curSong] ; startMusic()}}
@@ -994,6 +1018,62 @@ ApplicationWindow {
             }
 
 
+
+
+            Button{
+                id:musicfolderbutton
+                x: 974
+                y: 753
+                width: 200
+                height: 200
+                opacity:0
+onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (musicliste.visible==false) musicliste.visible=true  ;   }
+
+            }
+
+
+
+
+            Component {
+                id: musicselectDelegate
+                Button{
+                    text:(index+1)+" "+name
+
+                    width:250
+                    onPressed:
+                    {
+                    songName.text=name;
+                    songArtist.text=artist;
+                    playmusic.source=source;
+                    curSong=index;
+                    startMusic();
+
+
+
+                     }
+
+                }
+            }
+
+
+
+
+            ListView {
+                id:musicliste
+                x: 844
+                y: 153
+                width:250
+                height:600
+                visible:false
+
+
+                model: MP3Model {}
+                delegate: musicselectDelegate
+                highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+                focus: true
+
+
+            }
 
 
 
@@ -1144,16 +1224,165 @@ ApplicationWindow {
                 height: 200
                 visible: true
                 opacity: 0
-                // onPressed: {phonecalltab.visible=true;}
+                 onPressed: {phonecalltab.visible=true; call.text="Rufe Dieter Wallach an       "+phoneNumber.text ; phonecalltimer.start(); phonecallcounter=0; phonecalllengthcounter=0;}
 
 
             }
+
+Timer{
+id:phonecalltimer
+interval:1000
+repeat:true
+onTriggered:{
+
+if(phonecallcounter==0)
+{
+phonecallbubble1.color="#ffffff" ;
+phonecallbubble2.color="#ffffff" ;
+phonecallbubble3.color="#ffffff" ;
+
+}
+else if (phonecallcounter==1)
+{
+phonecallbubble1.color="#ef7d25" ;
+phonecallbubble2.color="#ffffff" ;
+phonecallbubble3.color="#ffffff" ;
+
+
+}
+else if (phonecallcounter==2)
+{
+phonecallbubble1.color="#ef7d25" ;
+phonecallbubble2.color="#ef7d25" ;
+phonecallbubble3.color="#ffffff" ;
+
+
+}
+else if (phonecallcounter==3)
+{
+phonecallbubble1.color="#ef7d25" ;
+phonecallbubble2.color="#ef7d25" ;
+phonecallbubble3.color="#ef7d25" ;
+phonecallcounter=-1;
+
+
+}
+phonecallcounter++;
+phonecalllengthcounter++;
+phonecalllength.text="00:"+phonecalllengthcounter;
+
+
+if (phonecalllengthcounter<10)
+{
+
+phonecalllength.text="00:0"+phonecalllengthcounter;
+}
+
+
+
+if (phonecalllengthcounter>=10)
+{
+
+phonecalltimer.stop();
+phonecalltab.visible=false;
+phonecallcounter=0;
+phonecalllengthcounter=0;
+phonecalllength.text="00:"+phonecalllengthcounter;
+}
+
+
+
+
+}
+
+}
+
+
+
+
+
+
             //Phonecalling
             Rectangle{
                 id:phonecalltab
                 visible: false
                 height: 1880
                 width:1080
+Label{id:call
+x:100
+y:100
+text:qsTr("Rufe Dieter Wallach an   "+phoneNumber.text)
+font.pointSize:40
+
+
+}
+
+Rectangle{
+id:phonecallbubble1
+x:300
+y:300
+width:100
+height:100
+radius:width*0.5
+color:"#ef7d25"
+border.color: "#000000"
+border.width: 1
+
+
+}
+
+Rectangle{
+id:phonecallbubble2
+x:450
+y:300
+width:100
+height:100
+radius:width*0.5
+color:"#ef7d25"
+border.color: "#000000"
+border.width: 1
+
+
+}
+
+
+Rectangle{
+id:phonecallbubble3
+x:600
+y:300
+width:100
+height:100
+radius:width*0.5
+color:"#ef7d25"
+border.color: "#000000"
+border.width: 1
+
+
+}
+
+
+
+Image{id:phoneright
+x:750
+y:300
+width:100
+height:100
+source:"background/phone.svg"
+}
+
+Label{
+id:phonecalllength
+x:450
+y:200
+font.pointSize:40
+color:"#ef7d25"
+text:"00:0"+phonecalllengthcounter
+
+
+}
+
+
+
 
 
             }
@@ -1265,10 +1494,39 @@ ApplicationWindow {
         }
 
         Page4Form {
+Timer{
+id:drawmaptimer
+interval:1000
+running:false
+repeat:false
+triggeredOnStart:false
+onTriggered:{
+routeModel.update();
+routeupdatecounter++;
+if(routeupdatecounter==5){routeupdatecounter=0; drawmaptimer.stop() ;};
+
+
+}
+}
+
+
             Map {
 
 
                 Label {x:0;y:1800; width: 50;height:10; font.pointSize: 10;id:licenceinfo ; text:"Karte hergestellt aus OpenStreetMap-Daten | Lizenz: Open Database License (ODbL)" ;}
+
+
+
+MapCircle {
+id:mapcircle1
+       center {
+           latitude: valueSource.latitude
+           longitude: valueSource.longitude
+       }
+       radius: 10.0
+       color: "#ef7d25"
+       border.width: 3
+   }
 
 
 
@@ -1278,7 +1536,13 @@ ApplicationWindow {
                     id: addressDelegate
                     Button{
                         text:name
-                        onPressed: {suchleiste.text=address;}
+                        onPressed:
+                        {
+                        suchleiste.text=address;
+                        destinationlat=lat;
+                        destinationlon=lon;
+
+                         }
 
                     }
                 }
@@ -1332,8 +1596,10 @@ ApplicationWindow {
 
 
                     onPressed: {
-                        getLocationFromName("'"+suchleiste.text+"'");
-                        mapupdater.start();
+                      // getLocationFromName("'"+suchleiste.text+"'");
+                       drawMap();
+
+
 
 
 
@@ -1376,33 +1642,6 @@ ApplicationWindow {
 
 
 
-                Timer{
-                    id:mapupdater
-                    running:false
-                    repeat: false
-                    interval:2000
-                    onTriggered: {
-
-
-                        aquery.clearWaypoints();
-                        routeModel.reset();
-                        aquery.CarTravel;
-                        aquery.FastestRoute;
-
-                        // map.center=QtPositioning.coordinate(49.2605522, 7.3601991)
-
-
-                        map.center=QtPositioning.coordinate(destinationlat, destinationlon);
-                        aquery.addWaypoint(QtPositioning.coordinate(valueSource.latitude, valueSource.longitude));
-                        aquery.addWaypoint(QtPositioning.coordinate(destinationlat, destinationlon));
-
-                        routeModel.update();
-
-
-                        console.debug("Maps läuft")
-
-                    }
-                }
 
 
 
@@ -1411,16 +1650,11 @@ ApplicationWindow {
                     plugin: aPlugin
                     query: RouteQuery{id:aquery}
 
-                    Component.onCompleted: {
+                    Component.onCompleted: {}
 
 
-                        //aquery.addWaypoint(QtPositioning.coordinate(49.2605522, 7.3601991));
-                        //aquery.addWaypoint(QtPositioning.coordinate(49.2021019, 7.2163559));
-                        //routeModel.update();
-                        // mapupdater.start();
 
 
-                    }
 
                 }
 
@@ -1437,37 +1671,11 @@ ApplicationWindow {
 
                         route: routeData
                         line.color: "#ef7d25"
-                        line.width: 5
-                        smooth: true
+                        line.width: 6
+                        smooth: false
                         opacity: 1
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 activeMapType: supportedMapTypes[supportedMapTypes.length - 1]
             }
 
@@ -1488,6 +1696,29 @@ ApplicationWindow {
 
         Page5Form {
             visible: true
+
+            Label{
+
+            id:impressumheader
+            x:420
+            y:100
+            width: 100
+            height: 100
+            font.bold: true
+            text: "Impressum"
+            font.pointSize: 30;
+            color:"#ef7d25"
+            style: Text.Outline
+
+            }
+
+
+
+
+
+
+
+
         }
     }
 
@@ -1888,7 +2119,7 @@ color: '#FFFFFF'
                 onPressed: {
 
                     curSong++
-                    albumName.text=curSong+"    "+songCount +"  "+songTitles[2];
+
 
                     if(curSong>songCount){curSong=0;playmusic.source=songList[curSong];songName.text=songTitles[curSong] ;startMusic()}
                     if(curSong<=songCount) {playmusic.source=songList[curSong];songName.text=songTitles[curSong];startMusic()}
@@ -2394,3 +2625,9 @@ color: '#FFFFFF'
 
 
 
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

@@ -60,5 +60,6 @@
         <file>background/circle.png</file>
         <file>AddressModel.qml</file>
         <file>background/volumemute.png</file>
+        <file>MP3Model.qml</file>
     </qresource>
 </RCC>

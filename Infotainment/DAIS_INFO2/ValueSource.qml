@@ -165,8 +165,8 @@ Item {
    // property double longitude: 7.2582644;
    // property double latitude: 49.2372916;
 
-     property double longitude: 7.3601991;
-     property double latitude: 49.2605522;
+     property double longitude: 7.360398;
+     property double latitude: 49.2607409;
 
 
     property bool routeInProgress: false
