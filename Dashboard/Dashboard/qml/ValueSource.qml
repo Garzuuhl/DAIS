@@ -20,7 +20,10 @@ Item {
     property bool motor: false
     property bool battery: false
     property bool oilWarning: false
-    property bool coolantWarning: false
+    property real tirePressureFrontLeft: 0
+    property real tirePressureFrontRight: 0
+    property real tirePressureBackLeft: 0
+    property real tirePressureBackRight: 0
 
 
 
@@ -44,6 +47,10 @@ Item {
         valueSource.battery = true
         valueSource.oilWarning = true
         valueSource.coolantWarning = true
+        valueSource.tirePressureFrontLeft = 100
+        valueSource.tirePressureFrontRight = 100
+        valueSource.tirePressureBackLeft = 100
+        valueSource.tirePressureBackRight = 100
     }
 
     function allLightsOff() {
@@ -66,6 +73,10 @@ Item {
         valueSource.battery = false
         valueSource.oilWarning = false
         valueSource.coolantWarning = false
+        valueSource.tirePressureFrontLeft = 0
+        valueSource.tirePressureFrontRight = 0
+        valueSource.tirePressureBackLeft = 0
+        valueSource.tirePressureBackRight = 0
     }
 }
 

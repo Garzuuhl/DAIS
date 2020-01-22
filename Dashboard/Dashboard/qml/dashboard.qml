@@ -69,6 +69,10 @@ ApplicationWindow {
     property var batterySubscription: 0
     property var oilSubscription: 0
     property var coolantSubscription: 0
+    property var tirePressureFrontLeftSubscription: 0
+    property var tirePressureFrontRightSubscription: 0
+    property var tirePressureBackLeftSubscription: 0
+    property var tirePressureBackRightSubscription: 0
 
     // Parse received messages from subscription and set values
     function setSpeed(payload) {
@@ -155,6 +159,22 @@ ApplicationWindow {
                 (payload === 'True' || payload === 'true') ? true : false
     }
 
+    function setTirePressureFrontLeft(payload) {
+        valueSource.tirePressureFrontLeft = parseFloat(payload)
+    }
+
+    function setTirePressureFrontRight(payload) {
+        valueSource.tirePressureFrontRight = parseFloat(payload)
+    }
+
+    function setTirePressureBackLeft(payload) {
+        valueSource.tirePressureBackLeft = parseFloat(payload)
+    }
+
+    function setTirePressureBackRight(payload) {
+        valueSource.tirePressureBackRight = parseFloat(payload)
+    }
+
     // Instantiation of qmlmqttclient
 
     MqttClient {
@@ -193,7 +213,7 @@ ApplicationWindow {
             fuelSubscription.messageReceived.connect(setFuel)
 
             blinkerSubscription = mqttclient.subscribe("car/Blink")//
-            blinkerSubscription.messageReceived(setBlinker)
+            blinkerSubscription.messageReceived.connect(setBlinker)
 
             handbrakeSubscription = mqttclient.subscribe("car/HandbrakeActivated")//
             handbrakeSubscription.messageReceived.connect(setHandbrake)
@@ -203,10 +223,24 @@ ApplicationWindow {
             lightSubscription.messageReceived.connect(setLight)
 
             highbeamSubscription = mqttclient.subscribe("car/Fullbeam")//
-            highbeamSubscription.messageReceived(setHighbeam)
+            highbeamSubscription.messageReceived.connect(setHighbeam)
 
             foglightSubscription = mqttclient.subscribe("car/FogLamp")//
             foglightSubscription.messageReceived.connect(setFoglight)
+
+            // Tire Pressure
+            tirePressureFrontLeftSubscription = mqttclient.subscribe("car/TirePressureFrontLeft")
+            tirePressureFrontLeftSubscription.messageReceived.connect(setTirePressureFrontLeft)
+
+            tirePressureFrontRightSubscription = mqttclient.subscribe("car/TirePressureFrontRight")
+            tirePressureFrontRightSubscription.messageReceived.connect(setTirePressureFrontRight)
+
+            tirePressureBackLeftSubscription = mqttclient.subscribe("car/TirePressureBackLeft")
+            tirePressureBackLeftSubscription.messageReceived.connect(setTirePressureBackLeft)
+
+            tirePressureBackRightSubscription = mqttclient.subscribe("car/TirePressureBackRight")
+            tirePressureBackRightSubscription.messageReceived.connect(setTirePressureBackRight)
+
 
             // Temps
             outsideTempSubscription = mqttclient.subscribe("car/OutsideTemperature")//
