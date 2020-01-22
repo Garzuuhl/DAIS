@@ -134,7 +134,7 @@ Item {
     //Reifendruck Hinten Links
     Text {
         id: reifen_hl
-        text: Math.round(valueSource.tirePressureBackLeft * 100) / 100
+        text: Math.round(valueSource.tirePressureFrontLeft * 100) / 100
         anchors.top: parent.top
         anchors.topMargin: 300
         anchors.left: parent.left
@@ -149,7 +149,7 @@ Item {
     //Reifendruck Hinten Rechts
     Text {
         id: reifen_hr
-        text: Math.round(valueSource.tirePressureFrontRight * 100) / 100
+        text: Math.round(valueSource.tirePressureBackRight * 100) / 100
         anchors.top: parent.top
         anchors.topMargin: 300
         anchors.right: parent.right

@@ -5,7 +5,7 @@ Item {
 
     property real kph: 0
     property real rpm: 0
-    property string gear: "0"
+    property string gear: "1"
     //property real maxrpm: 10000
     property real fuel: 0.5
     property int blinker: 0     // left: -1 | right: 1
@@ -20,6 +20,7 @@ Item {
     property bool motor: false
     property bool battery: false
     property bool oilWarning: false
+    property bool coolantWarning: false
     property real tirePressureFrontLeft: 0
     property real tirePressureFrontRight: 0
     property real tirePressureBackLeft: 0
@@ -57,7 +58,7 @@ Item {
         console.log("allLightsOff")
         valueSource.kph = 0
         valueSource.rpm = 0
-        valueSource.gear = "0"
+        valueSource.gear = "1"
         //valueSource.maxrpm = 10000
         valueSource.fuel = 0.5
         valueSource.blinker = 0
