@@ -66,7 +66,7 @@ Item {
         x: 465
         y: -1
         color: "#ef7d25"
-        text: qsTr("%1 °C").arg(valueSource.coolantTemp)
+        text: qsTr("%1 °C").arg(Math.round(valueSource.coolantTemp))
         styleColor: "#272727"
         style: Text.Raised
         horizontalAlignment: Text.AlignLeft

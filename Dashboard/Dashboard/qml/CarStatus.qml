@@ -104,7 +104,7 @@ Item {
     //Reifendruck Vorne Links
     Text {
         id: reifen_vl
-        text: qsTr("0.0")
+        text: Math.round(valueSource.tirePressureFrontLeft * 100) / 100
         anchors.top: parent.top
         anchors.topMargin: 75
         anchors.left: parent.left
@@ -119,7 +119,7 @@ Item {
     //Reifendruck Vorne Rechts
     Text {
         id: reifen_vr
-        text: qsTr("0.0")
+        text: Math.round(valueSource.tirePressureFrontRight * 100) / 100
         anchors.top: parent.top
         anchors.topMargin: 75
         anchors.right: parent.right
@@ -134,7 +134,7 @@ Item {
     //Reifendruck Hinten Links
     Text {
         id: reifen_hl
-        text: qsTr("0.0")
+        text: Math.round(valueSource.tirePressureBackLeft * 100) / 100
         anchors.top: parent.top
         anchors.topMargin: 300
         anchors.left: parent.left
@@ -149,7 +149,7 @@ Item {
     //Reifendruck Hinten Rechts
     Text {
         id: reifen_hr
-        text: qsTr("0.0")
+        text: Math.round(valueSource.tirePressureFrontRight * 100) / 100
         anchors.top: parent.top
         anchors.topMargin: 300
         anchors.right: parent.right

@@ -29,7 +29,7 @@ Item {
 
     function allLightsOn() {
         console.log("allLightsOn")
-        valueSource.kph = 130
+        valueSource.kph = 130.5
         valueSource.rpm = 5000
         valueSource.gear = "10"
         //valueSource.maxrpm = 10000
@@ -40,17 +40,17 @@ Item {
         valueSource.light = true
         valueSource.highbeam = true
         valueSource.foglight = true
-        valueSource.outsideTemp = 70
-        valueSource.oilTemp = 300
-        valueSource.coolantTemp = 200
+        valueSource.outsideTemp = 70.5
+        valueSource.oilTemp = 300.5
+        valueSource.coolantTemp = 200.5
         valueSource.motor = true
         valueSource.battery = true
         valueSource.oilWarning = true
         valueSource.coolantWarning = true
-        valueSource.tirePressureFrontLeft = 100
-        valueSource.tirePressureFrontRight = 100
-        valueSource.tirePressureBackLeft = 100
-        valueSource.tirePressureBackRight = 100
+        valueSource.tirePressureFrontLeft = 100.5
+        valueSource.tirePressureFrontRight = 100.5
+        valueSource.tirePressureBackLeft = 100.5
+        valueSource.tirePressureBackRight = 100.5
     }
 
     function allLightsOff() {
