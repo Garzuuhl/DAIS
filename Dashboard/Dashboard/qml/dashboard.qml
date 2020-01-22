@@ -98,8 +98,8 @@ ApplicationWindow {
 
     function setBlinker(payload) {
         var blink = parseInt(payload)
-        leftSignals.turnSignal_left.visible = blink === -1
-        rightSignals.turnSignal_right.visible = blink === 1
+        valueSource.leftBlinkerOn = (blink < 0)
+        valueSource.rightBlinkerOn = (blink > 0)
     }
 
     function setHandbrake(payload) {
@@ -176,6 +176,8 @@ ApplicationWindow {
     }
 
     // Instantiation of qmlmqttclient
+
+    Component.onCompleted: mqttclient.connectToHost()
 
     MqttClient {
         id: mqttclient
@@ -524,14 +526,14 @@ ApplicationWindow {
 
             TextField {
                 id: hostnameField
-                text: ""
+                text: "localhost"
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 placeholderText: "<Host>"
             }
 
             TextField {
                 id: portField
-                text: ""
+                text: "1883"
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 placeholderText: "<Port>"
             }

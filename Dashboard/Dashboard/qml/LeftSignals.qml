@@ -13,13 +13,30 @@ Item {
         id: turnSignal_left
         width: 50
         height: 50
-        visible: valueSource.blinker === -1
+        visible: false
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.right: parent.right
         anchors.rightMargin: 25
         fillMode: Image.PreserveAspectFit
         source: "../background/turn-signal_left.svg"
+    }
+
+    Timer {
+        id: leftBlinker_timer1
+        interval: 500
+        running: valueSource.leftBlinkerOn
+        repeat: true
+        onTriggered: {
+            turnSignal_left.visible = true
+            leftBlinker_timer2.start()
+        }
+    }
+
+    Timer {
+        id: leftBlinker_timer2
+        interval: 500
+        onTriggered: turnSignal_left.visible = false
     }
 
     Image {

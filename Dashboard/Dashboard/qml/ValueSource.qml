@@ -8,7 +8,8 @@ Item {
     property string gear: "1"
     //property real maxrpm: 10000
     property real fuel: 0.5
-    property int blinker: 0     // left: -1 | right: 1
+    property bool leftBlinkerOn: false     // left: -1 | right: 1
+    property bool rightBlinkerOn: false     // left: -1 | right: 1
     property bool warning: false
     property bool handbrake: false
     property bool light: false
@@ -21,10 +22,10 @@ Item {
     property bool battery: false
     property bool oilWarning: false
     property bool coolantWarning: false
-    property real tirePressureFrontLeft: 0
-    property real tirePressureFrontRight: 0
-    property real tirePressureBackLeft: 0
-    property real tirePressureBackRight: 0
+    property real tirePressureFrontLeft: 2.5
+    property real tirePressureFrontRight: 2.5
+    property real tirePressureBackLeft: 2.5
+    property real tirePressureBackRight: 2.5
 
 
 
@@ -35,7 +36,8 @@ Item {
         valueSource.gear = "10"
         //valueSource.maxrpm = 10000
         valueSource.fuel = 0.1
-        valueSource.blinker = -1
+        valueSource.leftBlinkerOn = true
+        valueSource.rightBlinkerOn = true
         valueSource.warning = true
         valueSource.handbrake = true
         valueSource.light = true
@@ -61,7 +63,8 @@ Item {
         valueSource.gear = "1"
         //valueSource.maxrpm = 10000
         valueSource.fuel = 0.5
-        valueSource.blinker = 0
+        valueSource.leftBlinkerOn = false
+        valueSource.rightBlinkerOn = false
         valueSource.warning = false
         valueSource.handbrake = false
         valueSource.light = false
@@ -74,10 +77,10 @@ Item {
         valueSource.battery = false
         valueSource.oilWarning = false
         valueSource.coolantWarning = false
-        valueSource.tirePressureFrontLeft = 0
-        valueSource.tirePressureFrontRight = 0
-        valueSource.tirePressureBackLeft = 0
-        valueSource.tirePressureBackRight = 0
+        valueSource.tirePressureFrontLeft = 2.5
+        valueSource.tirePressureFrontRight = 2.5
+        valueSource.tirePressureBackLeft = 2.5
+        valueSource.tirePressureBackRight = 2.5
     }
 }
 
