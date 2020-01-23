@@ -1,3 +1,4 @@
+//Imports
 import QtQuick 2.13
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.1
@@ -7,7 +8,6 @@ import QtLocation 5.12
 import QtPositioning 5.6
 
 
-//
 
 
 // Make registered qmlmqttclient visible to qml
@@ -17,6 +17,7 @@ import MqttClient 1.0
 ApplicationWindow {
     id: applicationWindow
     visible: true
+    //Rahmenloses Fenster
     flags:  Qt.FramelessWindowHint
     width: 1080
     height: 1920
@@ -28,43 +29,67 @@ ApplicationWindow {
 
 
 
-    //Variablen
+    //Daten des MQTT-Broker werden in dieser Klasse gespeichert. Eine Instanz  der Klasse ValueSource wird generiert
     ValueSource {
         id: valueSource
     }
 
     property var i:0;
-    //Musikspieler
+    //#Musikspieler
+
+    //Zur Überorüfung ob die Musik spielt oder nicht
     property var isPlayingMusic:false;
+    //Songlänge in Minuten --> Konvertierung siehe hier : https://stackoverflow.com/questions/17624335/converting-milliseconds-to-minutes-and-seconds/49203864
     property int songDurationInMinutes:playmusic.duration/1000/60;
+    //Songlänge in Sekunden
     property int songDurationInSeconds:(playmusic.duration/1000)%60;
+    //Gesamtlänge des Songs
     property string songDuration:songDurationInMinutes+":"+songDurationInSeconds;
+    //Momentane Länge des Songs in Minuten
     property int currentSongDurationInMinutes:playmusic.position/1000/60;
+    //Momentane Länge des Songs in Sekunden
     property int currentSongDurationInSeconds:(playmusic.duration/1000)%60;
     //property string currentSongDuration:"0"+currentSongDurationInMinutes+":0"+currentSongDurationInSeconds;
+    // Anzeige der momentanen Songlänge (links im Screen)
     property string currentSongDuration:"0:00";
+    //songTitel
     property string songTitle:playmusic.metaData.title="Summer"
 
+    //Songliste
     property var songList: ["music/bensound-summer.mp3","music/bensound-energy.mp3","music/bensound-tomorrow.mp3"]
+    //Anzahl der Songs
     property int songCount:songList.length-1;
+    // momentan gespielter Song
     property int curSong:0;
+    //Songtitel
     property var songTitles: ["Summer","Energy","Tomorrow"]
+    //Künstlername
     property var songArtist: ["BenSound","BenSound","BenSound"]
     property var isMainPlayButton:false
+    //Mute/Unmute-Variable
     property var musictoggle:true
-    //Telefon
+
+    //#Telefon
+    //Maximale Anzahl an Stellen bei der Telefonnummer
     property int maxDigits:20
+    //momentane Anzahl der Telefonnummerstellen
     property int curDigits:0
+    //Counter für die Anrufanimation
     property int phonecallcounter:0;
+    //Counter für die Länge des Anrufs (Sekunden)
     property int phonecalllengthcounter:0
-    //Navigation
+    //#Navigation
     property int mapcounter:0
+    //Länge und Breitengrad für die Navigation
     property var destinationlat:49.4472309
     property var destinationlon:7.7555738
+    //Counter für das  Updaten der Routeninformation
     property var routeupdatecounter:0
 
-    //Heizung
+    //#Heizungssteuerung
+    // Sichtbarkeit für die Heizelemente (Bereich oben)
     property var heatdialog:true
+    //Counter für die Lüftersteuerung
     property int heatfan:0
 
     //------------------------------------------------------------------------------------------
@@ -351,19 +376,20 @@ ApplicationWindow {
 
 
     //Components for MQTT Connection , invisible
+    //Hostname
     TextField {
         id: hostnameField
         text: "localhost"
         placeholderText: "<hostname>"
         visible: false
     }
-
+    //Port , default ist 1883 für MQTT
     TextField {
         id: portField
         text: "1883"
         visible: false
     }
-
+    //Benutzername
     TextField {
         id: usernameField
         text: ""
@@ -371,6 +397,7 @@ ApplicationWindow {
         enabled: mqttclient.state !== MqttClient.Connected
         visible: false
     }
+    //Passwort
     TextField {
         id: passwordField
         //echoMode: 2
@@ -505,10 +532,6 @@ ApplicationWindow {
             navigationBearingSubscription = mqttclient.subscribe("car/Bearing")
             navigationBearingSubscription.messageReceived.connect(setNavigationBearing)
 
-            // Route navigationBearingSubscription
-
-
-
             // Infotainment
 
             playerActiveSubscription = mqttclient.subscribe("car/infotainment/music/PlayerActive")
@@ -576,74 +599,91 @@ ApplicationWindow {
 
     //-----------------------------------------MQTTENDE-------------------------------------------------------------------------------------
 
-    //------------------------------|Audio
-
+    //Musik
+    //Beinhaltet die eigentliche Musik im MP3-Format
+    //Music von  © Bensound https://www.bensound.com/ , Lizenzinformation : https://www.bensound.com/licensing#tab
     Audio{
         id:playmusic
         source :"music/bensound-summer.mp3"
 
     }
 
+    //Startet die Musik
     function startMusic()
     {
 
-
-
+        //Spielt einen Song ab
         playmusic.play();
-        imagePlayButton.source = "background/stop.png";
-        miniplayButton.source="background/stop.png";
+        //Startet die Aktualisierung der Musikanzeige
+        songTimer.start();
+        //Die Icons der Buttons werden  zu Stop-Icons getauscht , momentaner Zustand : Song wird gespielt
+        imagePlayButton.source ="background/stop.png";
+        miniplayButton.source  ="background/stop.png";
 
 
     }
 
-
+    //Stoppt die Musik
     function stopMusic()
     {
+        //Pausieren der Musik
         playmusic.pause()
+        //Aktualisierung der Musikanzeige wird gestoppt
+        songTimer.stop();
+        //Die Icons der Buttons werden  zu Play-Icons getauscht , momentaner Zustand : Song ist gestoppt
         imagePlayButton.source = "background/play.svg";
         miniplayButton.source="background/play.svg";
 
-
-
     }
-
 
     function getLocationFromName(name)
     {
-        //api call
+
+        //Quellen zur Funktionsimplementierung:
+        //->https://forum.qt.io/topic/5626/parsing-json-with-qml/6
+        //->https://stackoverflow.com/questions/35040737/parse-json-to-listview-in-qml
+
+
+
+        //Nominatim API Doku
+        //->https://nominatim.org/release-docs/develop/api/Overview/
+
+        // API Call an die Nominatim-API
         var url ='https://nominatim.openstreetmap.org/search?q='+name+'&format=json&limit=1'
-        //   var url2='http://www.google.com'
+        //Eine XMLHttpRequest wird erzeugt.
         var doc= new XMLHttpRequest()
         //console.debug("test")
 
-
-
+        //Wartet auf Response
         doc.onreadystatechange=function()  {
 
             if(doc.readyState == 4 && doc.status == 200)
             {
                 console.debug("fertig");
-                //schon im json format
-                //   var result = JSON.parse(doc.responseText);
 
+                //JSON Object zum Testen
                 //var json= '[{"place_id":17011844,"licence":"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright","osm_type":"node","osm_id":1674026139,"boundingbox":["48.6184485","48.9384485","9.0200132","9.3400132"],"lat":"48.7784485","lon":"9.1800132","display_name":"Stuttgart, Baden-Württemberg, 70173, Germany","class":"place","type":"city","importance":0.7964347124043025,"icon":"https://nominatim.openstreetmap.org/images/mapicons/poi_place_city.p.20.png"}]';
+
+                // JSON-Object wird geparst. Eckige Klammern sind nötig um auf das erste Element zugreifen zu können!
                 var json = JSON.parse('['+doc.responseText+']');
+                //Das erste Element aus dem JSON-Objekt wird herausgefiltert. Das erste Object wurde genommen, da es den wahrscheinlichsten Treffer darstellt.
                 var jsonArray = json[0];
+                //Durchsuchen des Objects
                 for (var key = 0; key < jsonArray.length; key++) {
                     var value = jsonArray[key];
+                    //Extrahieren der Längen und Breitengrade vom Array
                     console.debug(value.lat, value.lon);
+                    //Längen und Breitengrad des Ziels werden übernommen.
                     destinationlat=value.lat;
                     destinationlon=value.lon;
-                    albumName.text=destinationlat+ "    "+destinationlon;
+                    //Testanzeige
+                    //albumName.text=destinationlat+ "    "+destinationlon;
                 }
-
-
-                //  albumName.text="";
-
             }
         }
 
 
+        //GET-Request wird an die API gestellt
         doc.open('GET',url,true)
         doc.send()
 
@@ -652,43 +692,49 @@ ApplicationWindow {
 
 
 
-
-function drawMap(){
-
-
-aquery.clearWaypoints();
-routeModel.reset();
-aquery.addWaypoint(QtPositioning.coordinate(valueSource.latitude,valueSource.longitude));
-aquery.addWaypoint(QtPositioning.coordinate(destinationlat,destinationlon));
-map.center=QtPositioning.coordinate(destinationlat,destinationlon);
-mapcircle1.center=QtPositioning.coordinate(destinationlat,destinationlon);
-routeModel.update();
-drawmaptimer.start();
-
-//albumName.text=routeModel.status;
-}
+    //Zeichnet die Route zwischen zwei Punkten(in Längen und Breitengrad)
 
 
+    function drawMap(){
+
+        //Löscht alle Wegpunkte
+        aquery.clearWaypoints();
+        //Löscht die alte Route
+        routeModel.reset();
+        //Fügt den Anfangspunkt hinzu
+        aquery.addWaypoint(QtPositioning.coordinate(valueSource.latitude,valueSource.longitude));
+        //Fügt das Ziel hinzu destinationlat und destinationlon wurden aus der getLocationFromName()- Methode erhalten
+        aquery.addWaypoint(QtPositioning.coordinate(destinationlat,destinationlon));
+        //Anzeigen der neuen Route
+        routeModel.update();
+        drawmaptimer.start();
+    }
 
 
-    //------------------------------
+
+
+    //Globaler Header
     header: Item {
+        // Drückt man auf die MouseArea wird das Hauptmenü geöffnet
         MouseArea{
             x:0
             y:0
-            width:200
+            width:100
             height:100
             visible: true
             onPressed:{
-
-                flickable.interactive=true;
-
+                if(!mainmenu.visible)
+                {mainmenu.visible = true;}
+                else if(mainmenu.visible)
+                {
+                    mainmenu.visible = false;
+                }
             }
 
 
 
 
-
+            //linke Schaltfläche im Header , öffnet das Hauptmenü
             Rectangle {
                 id: header
                 width: 1080
@@ -712,7 +758,7 @@ drawmaptimer.start();
 
 
 
-
+                //Uhrzeit
                 Text {
                     id:timeanddate
                     x:454
@@ -730,9 +776,9 @@ drawmaptimer.start();
 
 
 
-
+                //Wifianzeige (Platzhalter), nicht umsetzbar seitens des Simulators (schwer messbar)
                 Image {
-                    id: image9
+                    id: wifiimage
                     x: 750
                     y: 0
                     width: 100
@@ -743,8 +789,9 @@ drawmaptimer.start();
 
                 }
 
+                //Telefonnetzanzeige (Platzhalter), nicht umsetzbar seitens des Simulators
                 Image {
-                    id: image10
+                    id: signalimage
                     x: 860
                     y: 0
                     width: 100
@@ -752,7 +799,7 @@ drawmaptimer.start();
                     fillMode: Image.PreserveAspectFit
                     source: "background/signal.svg"
                 }
-
+                //Akkuanzeige   (Platzhalter), nicht umsetzbar seitens des Simulators
                 Image {
                     id: image11
                     x: 980
@@ -766,53 +813,14 @@ drawmaptimer.start();
 
             }
 
-
-
-            Text {
-                id: element22
-                text: qsTr("Text")
-                font.pixelSize: 12
-            }
-
-
         }
-
-
-
-
-
-
-
-        Flickable {
-            id: flickable2
-            x: 0
-            y: 7
-            width: 1080
-            height: 1920
-            visible: true
-            interactive: false
-            boundsMovement: Flickable.FollowBoundsBehavior
-            contentY: 1920
-            contentX: 0
-            contentHeight:2*1920
-            contentWidth:1080
-            boundsBehavior: Flickable.StopAtBounds
-            flickableDirection: Flickable.VerticalFlick
-
-
-
-        }
-
-
 
 
     }
-
-
-
-    //------------------------------------------------------------------------------------------------------------
+    //Hauptanzeige , SwipeView zum Anzeigen des Hauptinhalts, Steuerung durch Wischgeste
 
     SwipeView {
+        //horizontales Layout
         orientation: Qt.Horizontal
         id: swipeView
         visible: true
@@ -822,8 +830,10 @@ drawmaptimer.start();
         anchors.topMargin: 0
         anchors.fill: parent
 
+        //Musikspieler
         Page1Form {
 
+            //Icon um den Song abzuspielen
             Image {
                 id: imagePlayButton
                 x: 440
@@ -834,7 +844,7 @@ drawmaptimer.start();
                 source: "background/play.svg"
             }
 
-
+            //Icon um den letzten Song abzuspielen
             Image {
                 id: imagelastSongButton
                 x: 140
@@ -845,7 +855,7 @@ drawmaptimer.start();
                 fillMode: Image.PreserveAspectFit
                 source: "background/step-backward.svg"
             }
-
+            //Icon um den nächsten Song abzuspielen
             Image {
                 id: imagenextSongButton
                 x: 740
@@ -857,6 +867,7 @@ drawmaptimer.start();
             }
 
 
+            //Implementierung der Interaktion mit dem Play-Button
 
             Button {
                 id: playSongButton
@@ -881,10 +892,9 @@ drawmaptimer.start();
             }
 
 
-            //------------------------------|Musicplayerbutton
 
 
-
+            //Implementierung der Interaktion mit dem NextSong-Button
             Button {
                 id: nextSongButton
                 x: 764
@@ -903,17 +913,7 @@ drawmaptimer.start();
                     if(curSong<=songCount) {playmusic.source=songList[curSong];songName.text=songTitles[curSong] ; startMusic()}}
             }
 
-            Button {
-                id: songSelectButton
-                x: 985
-                y: 762
-                width: 95
-                height: 183
-                text: "Button"
-                opacity: 0
-                visible: true
-            }
-
+            //Implementierung der Interaktion mit dem LastSong-Button
             Button {
                 id: lastSongButton
                 x: 169
@@ -930,6 +930,7 @@ drawmaptimer.start();
                 }
             }
 
+            //Soll ursprünglich die Art des Mediums anzeigen: USB, Streaming usw...
             Label {
                 id: mediaName
                 x: 234
@@ -940,7 +941,7 @@ drawmaptimer.start();
                 font.pointSize: 40
                 horizontalAlignment: Text.AlignHCenter
             }
-
+            //momentane Stelle im Song
             Label {
                 id: currentSongTime
                 x: 34
@@ -950,7 +951,7 @@ drawmaptimer.start();
                 text: currentSongDuration
                 font.pointSize: 50
             }
-
+            //Name des Albums
             Label {
                 id: albumName
                 x: 234
@@ -961,7 +962,7 @@ drawmaptimer.start();
                 horizontalAlignment: Text.AlignHCenter
                 font.pointSize: 40
             }
-
+            //Name des Songs
             Label {
                 id: songName
                 x: 234
@@ -972,7 +973,7 @@ drawmaptimer.start();
                 horizontalAlignment: Text.AlignHCenter
                 font.pointSize: 40
             }
-
+            //Gesamtlänge des Songs
             Label {
                 id: fullSongTime
                 x: 904
@@ -982,7 +983,7 @@ drawmaptimer.start();
                 text: songDuration
                 font.pointSize: 50
             }
-
+            //Simuliert den Fortschritt im Song
             ProgressBar {
                 id: progressBar
                 x: 234
@@ -993,7 +994,7 @@ drawmaptimer.start();
                 font.pointSize: 8
                 value: 0
             }
-
+            //Umrandung für den Musikfortschritt
             Rectangle {
                 id: progressbarBorder
                 x: 230
@@ -1004,12 +1005,12 @@ drawmaptimer.start();
                 radius: 1
                 border.width: 4
             }
-
+            //Zeigt den momentanen Fortschritt an , die property width wird hier benutzt um den Fortschritt zu simulieren
             Rectangle {
                 id: progressbarRect
                 x: 234
                 y: 1047
-                width: 600
+                width: 0
                 height: 49
                 color: "#ef7d25"
                 radius: 0
@@ -1018,7 +1019,7 @@ drawmaptimer.start();
 
 
 
-
+            //Öffnet eine Musikliste aus der man auswählen kann
             Button{
                 id:musicfolderbutton
                 x: 974
@@ -1026,13 +1027,13 @@ drawmaptimer.start();
                 width: 200
                 height: 200
                 opacity:0
-onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (musicliste.visible==false) musicliste.visible=true  ;   }
+                onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (musicliste.visible==false) musicliste.visible=true  ;   }
 
             }
 
 
 
-
+            //Zeigt die Songliste an
             Component {
                 id: musicselectDelegate
                 Button{
@@ -1041,22 +1042,23 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
                     width:250
                     onPressed:
                     {
-                    songName.text=name;
-                    songArtist.text=artist;
-                    playmusic.source=source;
-                    curSong=index;
-                    startMusic();
+                        songName.text=name;
+                        songArtist.text=artist;
+                        playmusic.source=source;
+                        curSong=index;
+                        startMusic();
 
 
 
-                     }
+                    }
 
                 }
             }
 
 
 
-
+            //Benutzt die Klasse MP3Model zum Darstellen der Inhalte
+            // Das Beispiel der QML-Doku (https://doc.qt.io/qt-5/qml-qtquick-listview.html) wurde verwendet und angepasst
             ListView {
                 id:musicliste
                 x: 844
@@ -1080,13 +1082,13 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
 
         }
-        //#####################################################################################################################
+        //Telefon
         Page2Form {
             id: page2Form
             visible: true
 
 
-
+            //Telefonnummer
             Label{
                 id:phoneNumber
                 text:""
@@ -1096,9 +1098,9 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
                 font.pointSize:40
             }
 
-            //1
+            //Taste 1
             Button {
-                x: 185
+                x: 124
                 y: 281
                 width: 200
                 height: 200
@@ -1107,8 +1109,7 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
                 opacity: 0
                 onPressed: {if(curDigits<maxDigits){phoneNumber.text=phoneNumber.text+"1";curDigits++}}
             }
-
-            //2
+            //Taste 2
             Button {
                 x: 440
                 y: 281
@@ -1119,9 +1120,9 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
                 onPressed: {if(curDigits<maxDigits){phoneNumber.text=phoneNumber.text+"2";curDigits++}}
             }
 
-            //3
+            //Taste 3
             Button {
-                x: 724
+                x: 756
                 y: 281
                 width: 200
                 height: 200
@@ -1131,9 +1132,10 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
             }
 
-            //4
+
+            //Taste 4
             Button {
-                x: 185
+                x: 124
                 y: 550
                 width: 200
                 height: 200
@@ -1143,8 +1145,7 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
             }
 
-
-            //5
+            //Taste 5
             Button {
                 x: 440
                 y: 550
@@ -1156,9 +1157,9 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
             }
 
-            //6
+            //Taste 6
             Button {
-                x: 724
+                x: 756
                 y: 550
                 width: 200
                 height: 200
@@ -1167,9 +1168,9 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
                 onPressed: {if(curDigits<maxDigits){phoneNumber.text=phoneNumber.text+"6";curDigits++}}
             }
 
-            //7
+            //Taste 7
             Button {
-                x: 185
+                x: 124
                 y: 814
                 width: 200
                 height: 200
@@ -1179,7 +1180,7 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
             }
 
-            //8
+            //Taste 8
             Button {
                 x: 440
                 y: 814
@@ -1191,9 +1192,9 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
             }
 
-            //9
+            //Taste 9
             Button {
-                x: 724
+                x: 756
                 y: 814
                 width: 200
                 height: 200
@@ -1203,9 +1204,9 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
             }
 
-            //0
+            //Taste 0
             Button {
-                x: 185
+                x: 124
                 y: 1111
                 width: 200
                 height: 200
@@ -1215,7 +1216,7 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
 
             }
 
-            //phonebutton
+            //Telefonhörer
             Button {
                 x: 440
                 y: 1111
@@ -1223,162 +1224,168 @@ onPressed: {  if(musicliste.visible==true)musicliste.visible=false; else if (mus
                 height: 200
                 visible: true
                 opacity: 0
-                 onPressed: {phonecalltab.visible=true; call.text="Rufe Dieter Wallach an       "+phoneNumber.text ; phonecalltimer.start(); phonecallcounter=0; phonecalllengthcounter=0;}
+                onPressed: {phonecalltab.visible=true; call.text="Rufe Dieter Wallach an       "+phoneNumber.text ; phonecalltimer.start(); phonecallcounter=0; phonecalllengthcounter=0;}
 
 
             }
 
-Timer{
-id:phonecalltimer
-interval:1000
-repeat:true
-onTriggered:{
+            // Updatet die Gesprächszeit und zeigt die Anrufanimation
 
-if(phonecallcounter==0)
-{
-phonecallbubble1.color="#ffffff" ;
-phonecallbubble2.color="#ffffff" ;
-phonecallbubble3.color="#ffffff" ;
+            Timer{
+                id:phonecalltimer
+                interval:1000
+                repeat:true
+                onTriggered:{
 
-}
-else if (phonecallcounter==1)
-{
-phonecallbubble1.color="#ef7d25" ;
-phonecallbubble2.color="#ffffff" ;
-phonecallbubble3.color="#ffffff" ;
+                    if(phonecallcounter==0)
+                    {
+                        phonecallbubble1.color="#ffffff" ;
+                        phonecallbubble2.color="#ffffff" ;
+                        phonecallbubble3.color="#ffffff" ;
 
-
-}
-else if (phonecallcounter==2)
-{
-phonecallbubble1.color="#ef7d25" ;
-phonecallbubble2.color="#ef7d25" ;
-phonecallbubble3.color="#ffffff" ;
+                    }
+                    else if (phonecallcounter==1)
+                    {
+                        phonecallbubble1.color="#ef7d25" ;
+                        phonecallbubble2.color="#ffffff" ;
+                        phonecallbubble3.color="#ffffff" ;
 
 
-}
-else if (phonecallcounter==3)
-{
-phonecallbubble1.color="#ef7d25" ;
-phonecallbubble2.color="#ef7d25" ;
-phonecallbubble3.color="#ef7d25" ;
-phonecallcounter=-1;
+                    }
+                    else if (phonecallcounter==2)
+                    {
+                        phonecallbubble1.color="#ef7d25" ;
+                        phonecallbubble2.color="#ef7d25" ;
+                        phonecallbubble3.color="#ffffff" ;
 
 
-}
-phonecallcounter++;
-phonecalllengthcounter++;
-phonecalllength.text="00:"+phonecalllengthcounter;
+                    }
+                    else if (phonecallcounter==3)
+                    {
+                        phonecallbubble1.color="#ef7d25" ;
+                        phonecallbubble2.color="#ef7d25" ;
+                        phonecallbubble3.color="#ef7d25" ;
+                        phonecallcounter=-1;
 
 
-if (phonecalllengthcounter<10)
-{
-
-phonecalllength.text="00:0"+phonecalllengthcounter;
-}
-
+                    }
+                    phonecallcounter++;
+                    phonecalllengthcounter++;
+                    phonecalllength.text="00:"+phonecalllengthcounter;
 
 
-if (phonecalllengthcounter>=10)
-{
+                    if (phonecalllengthcounter<10)
+                    {
 
-phonecalltimer.stop();
-phonecalltab.visible=false;
-phonecallcounter=0;
-phonecalllengthcounter=0;
-phonecalllength.text="00:"+phonecalllengthcounter;
-}
+                        phonecalllength.text="00:0"+phonecalllengthcounter;
+                    }
 
 
 
+                    if (phonecalllengthcounter>=10)
+                    {
 
-}
-
-}
+                        phonecalltimer.stop();
+                        phonecalltab.visible=false;
+                        phonecallcounter=0;
+                        phonecalllengthcounter=0;
+                        phonecalllength.text="00:"+phonecalllengthcounter;
+                    }
 
 
 
 
+                }
+
+            }
 
 
-            //Phonecalling
+
+
+
+
+            //Zeigt den Inhalt der Simulation an , wenn angerufen wird
             Rectangle{
                 id:phonecalltab
                 visible: false
                 height: 1880
                 width:1080
-Label{id:call
-x:100
-y:100
-text:qsTr("Rufe Dieter Wallach an   "+phoneNumber.text)
-font.pointSize:40
+
+                //Zeigt die Nummer an , die angerufen wird.
+                Label{id:call
+                    x:100
+                    y:100
+                    text:qsTr("Rufe  "+phoneNumber.text+ " an")
+                    font.pointSize:40
 
 
-}
+                }
 
-Rectangle{
-id:phonecallbubble1
-x:300
-y:300
-width:100
-height:100
-radius:width*0.5
-color:"#ef7d25"
-border.color: "#000000"
-border.width: 1
-
-
-}
-
-Rectangle{
-id:phonecallbubble2
-x:450
-y:300
-width:100
-height:100
-radius:width*0.5
-color:"#ef7d25"
-border.color: "#000000"
-border.width: 1
+                //Erster Kreis
+                Rectangle{
+                    id:phonecallbubble1
+                    x:300
+                    y:300
+                    width:100
+                    height:100
+                    radius:width*0.5
+                    color:"#ef7d25"
+                    border.color: "#000000"
+                    border.width: 1
 
 
-}
+                }
+                //Zweiter Kreis
+                Rectangle{
+                    id:phonecallbubble2
+                    x:450
+                    y:300
+                    width:100
+                    height:100
+                    radius:width*0.5
+                    color:"#ef7d25"
+                    border.color: "#000000"
+                    border.width: 1
 
 
-Rectangle{
-id:phonecallbubble3
-x:600
-y:300
-width:100
-height:100
-radius:width*0.5
-color:"#ef7d25"
-border.color: "#000000"
-border.width: 1
+                }
+
+                //Dritter Kreis
+                Rectangle{
+                    id:phonecallbubble3
+                    x:600
+                    y:300
+                    width:100
+                    height:100
+                    radius:width*0.5
+                    color:"#ef7d25"
+                    border.color: "#000000"
+                    border.width: 1
 
 
-}
+                }
 
 
+                //Telefonicon
+                Image{id:phoneright
+                    x:750
+                    y:300
+                    width:100
+                    height:100
+                    source:"background/phone.svg"
+                }
 
-Image{id:phoneright
-x:750
-y:300
-width:100
-height:100
-source:"background/phone.svg"
-}
-
-Label{
-id:phonecalllength
-x:450
-y:200
-font.pointSize:40
-color:"#ef7d25"
-text:"00:0"+phonecalllengthcounter
+                //Zeigt die Länge des Gesprächs an
+                Label{
+                    id:phonecalllength
+                    x:450
+                    y:200
+                    font.pointSize:40
+                    color:"#ef7d25"
+                    text:"00:0"+phonecalllengthcounter
 
 
-}
+                }
 
 
 
@@ -1386,18 +1393,7 @@ text:"00:0"+phonecalllengthcounter
 
             }
 
-
-
-
-
-
-
-
-
-
-
-
-            //return-button
+            //Löscht die Nummer (damit man eine neue Nummer  eingeben kann)
             Button {
                 id: deletephonebutton
                 x: 724
@@ -1415,10 +1411,11 @@ text:"00:0"+phonecalllengthcounter
 
 
         }
-        //#####################################################################################################################
+        //Autoeinstellungen
         Page3Form {
-            //Carsettings
+            //Autoinformationen
             visible: true
+            //Reifendruck vorne links
             Label {
                 id: pressurefrontleft
                 x: 200
@@ -1426,6 +1423,7 @@ text:"00:0"+phonecalllengthcounter
                 font.pointSize: 40
                 text: valueSource.tirePressureFrontLeft
             }
+            //Reifendruck vorne rechts
             Label {
                 id: pressurefrontright
                 x: 800
@@ -1433,6 +1431,7 @@ text:"00:0"+phonecalllengthcounter
                 font.pointSize: 40
                 text:valueSource.tirePressureFrontRight
             }
+            //Reifendruck hinten links
             Label {
                 id: pressurebackleft
                 x: 200
@@ -1440,6 +1439,7 @@ text:"00:0"+phonecalllengthcounter
                 font.pointSize: 40
                 text:valueSource.tirePressureBackLeft
             }
+            //Reifendruck hinten rechts
             Label {
                 id: pressurebackright
                 x: 800
@@ -1448,44 +1448,23 @@ text:"00:0"+phonecalllengthcounter
                 text: valueSource.tirePressureBackRight
             }
 
-            Label {
-                id: consumption
-                x: 100
-                y: 1250
-                font.pointSize: 10
-                /* text: "Verbrauch: "
-+"Verbrauch"+valueSource.currentConsumption
-+"Temperatur" +valueSource.temp
-+"Abs"+valueSource.abs
-+"handbremser" +valueSource.handbrake
-+"gurt" +valueSource.seatbelt
-+"türr" +valueSource.doorOpen
-+"nebelscheinwerfer" +valueSource.fogbeam
-+"Temperatur" +valueSource.motor
-+"Temperatur" +valueSource.battery
-+"Temperatur"  +valueSource.tpms
-+"Temperatur" +valueSource.coolant
-+"ölstand" +valueSource.lowOil
-*/
-                text:""
-            }
 
-
+            //Kilometerstand
             Label {
                 id: kilometer
                 x: 100
                 y: 1350
                 font.pointSize: 30
-                text:"Kilometerstand: "+(Math.round(valueSource.distance * 100) / 100) +"km"
+                text:"Kilometerstand: "+(Math.round(valueSource.distance * 100) / 100) +" km"
             }
 
-
+            //Geschwindigkeit, zum primären testen ob die MQTT-Implementierung funktioniert
             Label {
                 id:strecke
                 x: 100
                 y: 1450
                 font.pointSize: 30
-                text:valueSource.kph
+                text:"Geschwindigkeit  "+Math.round(valueSource.kph) + "  km/ h"
             }
 
 
@@ -1493,55 +1472,57 @@ text:"00:0"+phonecalllengthcounter
         }
 
         Page4Form {
-Timer{
-id:drawmaptimer
-interval:1000
-running:false
-repeat:false
-triggeredOnStart:false
-onTriggered:{
-routeModel.update();
-routeupdatecounter++;
-if(routeupdatecounter==5){routeupdatecounter=0; drawmaptimer.stop() ;};
+//Karte und Navigation
+            //Timer, der die Route updatet , teilweise buggy
+            Timer{
+                id:drawmaptimer
+                interval:200
+                running:false
+                repeat:false
+                triggeredOnStart:false
+                onTriggered:{
+                    routeModel.update();
+                    routeupdatecounter++;
+                    if(routeupdatecounter==5){routeupdatecounter=0; drawmaptimer.stop() ;};
 
 
-}
-}
+                }
+            }
 
-
+//Zeigt die Karte an
             Map {
 
 
                 Label {x:0;y:1800; width: 50;height:10; font.pointSize: 10;id:licenceinfo ; text:"Karte hergestellt aus OpenStreetMap-Daten | Lizenz: Open Database License (ODbL)" ;}
 
 
-
-MapCircle {
-id:mapcircle1
-       center {
-           latitude: valueSource.latitude
-           longitude: valueSource.longitude
-       }
-       radius: 10.0
-       color: "#ef7d25"
-       border.width: 3
-   }
-
-
+//Zeigt den aktuellen Standort anhand eines Kreises
+                MapCircle {
+                    id:mapcircle1
+                    center {
+                        latitude: valueSource.latitude
+                        longitude: valueSource.longitude
+                    }
+                    radius: 10.0
+                    color: "#ef7d25"
+                    border.width: 3
+                }
 
 
 
+
+//Auswahl an vordefinierten Zielorten selbes Konzept wie beim MP3Model
                 Component {
                     id: addressDelegate
                     Button{
                         text:name
                         onPressed:
                         {
-                        suchleiste.text=address;
-                        destinationlat=lat;
-                        destinationlon=lon;
+                            suchleiste.text=address;
+                            destinationlat=lat;
+                            destinationlon=lon;
 
-                         }
+                        }
 
                     }
                 }
@@ -1576,6 +1557,13 @@ id:mapcircle1
 
 
 
+//Eigentlich war gedacht, dass man einen Begriff eingibt und die Nominatim-API den Namen in eine Geoposition umwandelt.
+//Die API und Funktion getLocationFromName() funktioniert auch im Debug. Bei der Releaseversion gab es jedoch einige Probleme mit den OpenSSL-Bibliotheken
+//Da ein HTTPS-Request versendet werden muss. Nominatim leitet einfache HTTP-Requests an ihre HTTPS-Seite weiter. QT benötigt OpenSSL-Bibliotheken  dafür.
+//Quellen : https://www.youtube.com/watch?v=2u5wnrx6J-E
+//https://doc.qt.io/qt-5/qml-qtlocation-maproute.html
+//https://stackoverflow.com/questions/49943303/display-multiple-routes-on-a-map-using-routemap-qml-qt
+
 
                 TextField{x:0;
                     y:100;
@@ -1585,6 +1573,9 @@ id:mapcircle1
                     id:suchleiste
                     onPressed: {}
                 }
+
+                // Route wird mit vordefinierten Orten berechnet. Gedacht war durch die Nominatim-API freie Orte zu wählen...
+
                 Button{
                     id:suchbutton
                     x:980;
@@ -1593,48 +1584,34 @@ id:mapcircle1
                     height:100;
                     text:"Route starten"
 
-
-                    onPressed: {
-                      // getLocationFromName("'"+suchleiste.text+"'");
-                       drawMap();
-
-
-
-
-
+                    onClicked:  {
+                        // getLocationFromName("'"+suchleiste.text+"'");
+                        drawMap();
                     }
 
                 }
 
-
-
-
-
-
                 id: map
                 anchors.fill: parent
-                // center: QtPositioning.coordinate(49.2605522, 7.3601991)
 
-                //center: QtPositioning.coordinate(26.328045523310905, 50.080033033011546)
                 center: QtPositioning.coordinate(valueSource.latitude, valueSource.longitude)
-                //Api-Begrenzung
+                //Openstreetmap-API-Begrenzung
                 zoomLevel: 17
                 minimumZoomLevel: 10
                 maximumZoomLevel: 17
 
-                //center:QtPositioning.coordinate(59.930, 10)
-                //@49.2605522,7.3601991
+                //Das Plugin "osm" wird benutzt (Openstreetmap-Karten, https://www.openstreetmap.de/)
+                //Liste aller Tileserver : https://wiki.openstreetmap.org/wiki/Tile_servers
+
                 plugin: Plugin
                 {id:aPlugin
                     name: "osm"
 
-                    //name: "osm.mapping.custom.host"
                     PluginParameter
                     {
+                        //Es wird ein Custom-Tileserver benutzt.
                         name: "osm.mapping.custom.host"
                         value:  "http://a.tile.openstreetmap.fr/hot/"
-                        //value:"http://a.tile.stamen.com/toner/"
-
                     }
 
                 }
@@ -1642,19 +1619,13 @@ id:mapcircle1
 
 
 
-
+//Beinhaltet die Routeninformationen (Routenquery wird anhand der OSM-Daten berechnet)
 
                 RouteModel {
                     id: routeModel
                     plugin: aPlugin
                     query: RouteQuery{id:aquery}
-
                     Component.onCompleted: {}
-
-
-
-
-
                 }
 
 
@@ -1666,6 +1637,7 @@ id:mapcircle1
                 Component {
                     id: routeDelegate
 
+                    //Grafische Umsetzung der Routendaten
                     MapRoute {
 
                         route: routeData
@@ -1687,47 +1659,31 @@ id:mapcircle1
 
         }
 
-
-
-
-
-
-
+//Impressum
         Page5Form {
             visible: true
 
+            //Überschrift
             Label{
-
-            id:impressumheader
-            x:420
-            y:100
-            width: 100
-            height: 100
-            font.bold: true
-            text: "Impressum"
-            font.pointSize: 30;
-            color:"#ef7d25"
-            style: Text.Outline
+                id:impressumheader
+                x:420
+                y:100
+                width: 100
+                height: 100
+                font.bold: true
+                text: "Impressum"
+                font.pointSize: 30;
+                color:"#ef7d25"
+                style: Text.Outline
 
             }
-
-
-
-
-
-
-
 
         }
     }
 
-
-    //------------------------------|Seite1-ENDE
-
-
     //Timers
 
-    //Clockrefresh
+    //Aktualisiert die Uhrzeit
     Timer{
         id: timer
         interval: 3000
@@ -1741,42 +1697,22 @@ id:mapcircle1
         }
 
     }
-
-
-    //Dropdownmenutimer
-
-
+    //Musiktimer
     Timer{
-        id: dropDownTimer
-        interval: 1000
+        id: songTimer
+        interval: 500
         repeat: true
         running: false
 
         onTriggered:
         {
-
-
-        }
-
-    }
-
-
-
-
-    //Musictimer
-    Timer{
-        id: songTimer
-        interval: 500
-        repeat: true
-        running: true
-
-        onTriggered:
-        {
+            //Berechnung der momentanen Songlänge
             currentSongDurationInMinutes=playmusic.position/1000/60;
             currentSongDurationInSeconds=(playmusic.position/1000)%60;
 
 
 
+            //Passt die Anzeige der Songlänge an
             if(currentSongDurationInMinutes>=10&&currentSongDurationInSeconds>=10)
                 currentSongDuration=""+currentSongDurationInMinutes+":"+currentSongDurationInSeconds;
             if(currentSongDurationInMinutes<10&&currentSongDurationInSeconds>=10)
@@ -1785,167 +1721,146 @@ id:mapcircle1
                 currentSongDuration=""+currentSongDurationInMinutes+":0"+currentSongDurationInSeconds;
             if(currentSongDurationInMinutes<10&&currentSongDurationInSeconds<10)
                 currentSongDuration=""+currentSongDurationInMinutes+":0"+currentSongDurationInSeconds;
-
-
-
-            //  else  currentSongDuration=""+currentSongDurationInMinutes+":"+currentSongDurationInSeconds;
-
-            //progressBar.value=playmusic.position/playmusic.duration;
+            //Zeigt die Songlänge anhand eines skalierbaren Balkens an
             progressbarRect.width=(playmusic.position/playmusic.duration)*600
         }
 
     }
 
-    Flickable {
-        id: flickable
+
+    Rectangle {
+        id: mainmenu
         x: 0
-        y: 7
+        y: 0
         width: 1080
         height: 1920
-        boundsMovement: Flickable.FollowBoundsBehavior
-        Rectangle {
-            id: borderImage1e
-            x: 0
-            y: -3
-            width: 1080
-            height: 1920
-            color: "#888483"
+        color: "#888483"
+        visible: false
 
 
+//Fahrzeuginformationen
+        Image {
+            id: image1
+            x: 90
+            y: 208
+            width: 318
+            height: 296
+            fillMode: Image.PreserveAspectFit
+            source: "background/car.svg"
 
-            Image {
-                id: image1
-                x: 90
-                y: 208
-                width: 318
-                height: 296
-                fillMode: Image.PreserveAspectFit
-                source: "background/car.svg"
-
-                Button {
-                    id: carSelectButton
-                    x: -22
-                    y: 0
-                    width: 403
-                    height: 337
-                    text: qsTr("Button")
-                    opacity: 0
-                    onClicked: {flickable.interactive=false; flickable.contentY=1920;flickable.contentX=0;swipeView.currentIndex = swipeView.currentIndex=2}
-                }
+            Button {
+                id: carSelectButton
+                x: -22
+                y: 0
+                width: 403
+                height: 337
+                text: qsTr("Button")
+                opacity: 0
+                onClicked: {mainmenu.visible=false;swipeView.currentIndex = swipeView.currentIndex=2}
             }
+        }
+//Kartenicon
+        Image {
+            id: mapicon
+            x: 617
+            y: 252
+            width: 359
+            height: 264
+            fillMode: Image.PreserveAspectFit
+            source: "background/map-marked-alt.svg"
 
-            Image {
-                id: mapicon
-                x: 617
-                y: 252
-                width: 359
-                height: 264
-                fillMode: Image.PreserveAspectFit
-                source: "background/map-marked-alt.svg"
-
-                Button {
-                    id: button
-                    x: 11
-                    y: -10
-                    width: 364
-                    height: 284
-                    text: qsTr("Button")
-                    opacity: 0
-                      onClicked:{flickable.interactive=false; flickable.contentY=1920;flickable.contentX=0;swipeView.currentIndex = swipeView.currentIndex=3}
-                }
+            Button {
+                id: button
+                x: 11
+                y: -10
+                width: 364
+                height: 284
+                text: qsTr("Button")
+                opacity: 0
+                onClicked:{mainmenu.visible=false;swipeView.currentIndex = swipeView.currentIndex=3}
             }
-
-            Image {
-                id: musicicon
-                x: 104
-                y: 699
-                width: 340
-                height: 321
-                fillMode: Image.PreserveAspectFit
-                source: "background/music.svg"
-
-
-                Button {
-                    id: button2
-                    x: 0
-                    y: 9
-                    width: 368
-                    height: 344
-                    text: qsTr("Button")
-                    opacity: 0
-                    onClicked:{flickable.interactive=false; flickable.contentY=1920;flickable.contentX=0;swipeView.currentIndex = swipeView.currentIndex=0}
-                }
-            }
-
-            Image {
-                id: phoneicon
-                x: 578
-                y: 708
-                width: 338
-                height: 324
-                fillMode: Image.PreserveAspectFit
-                source: "background/phone.svg"
-
-                Button {
-                    id: button3
-                    x: 0
-                    y: -18
-                    width: 354
-                    height: 360
-                    text: qsTr("Button")
-                    opacity: 0
-                    onClicked:{flickable.interactive=false; flickable.contentY=1920;flickable.contentX=0;swipeView.currentIndex = swipeView.currentIndex=1 }
-                }
-            }
-
-            Image {
-                id: cogsicon
-                x: 105
-                y: 1148
-                width: 329
-                height: 336
-                fillMode: Image.PreserveAspectFit
-                source: "background/cogs.svg"
-
-                Button {
-                    id: button4
-                    x: -1
-                    y: 10
-                    width: 330
-                    height: 300
-                    text: qsTr("Button")
-                    opacity: 0
-                      onClicked:{flickable.interactive=false; flickable.contentY=1920;flickable.contentX=0;swipeView.currentIndex = swipeView.currentIndex=4}
-                }
-            }
+        }
+//Musikicon
+        Image {
+            id: musicicon
+            x: 104
+            y: 699
+            width: 340
+            height: 321
+            fillMode: Image.PreserveAspectFit
+            source: "background/music.svg"
 
 
-
-
-            Rectangle {
-                id: rectangle
+            Button {
+                id: button2
                 x: 0
-                y: 1720
-                width: 1080
-                height: 200
-                color: "#696969"
-                border.color: "#000000"
+                y: 9
+                width: 368
+                height: 344
+                text: qsTr("Button")
+                opacity: 0
+                onClicked:{mainmenu.visible=false;swipeView.currentIndex = swipeView.currentIndex=0}
             }
+        }
+//Telefonicon
+        Image {
+            id: phoneicon
+            x: 578
+            y: 708
+            width: 338
+            height: 324
+            fillMode: Image.PreserveAspectFit
+            source: "background/phone.svg"
 
+            Button {
+                id: button3
+                x: 0
+                y: -18
+                width: 354
+                height: 360
+                text: qsTr("Button")
+                opacity: 0
+                onClicked:{mainmenu.visible=false;swipeView.currentIndex = swipeView.currentIndex=1 }
+            }
+        }
+//Impressum (Zahnradicon)
+        Image {
+            id: cogsicon
+            x: 105
+            y: 1148
+            width: 329
+            height: 336
+            fillMode: Image.PreserveAspectFit
+            source: "background/cogs.svg"
 
-
-
-
-
-
-
-
-
-
-
-            visible: true
+            Button {
+                id: button4
+                x: -1
+                y: 10
+                width: 330
+                height: 300
+                text: qsTr("Button")
+                opacity: 0
+                onClicked:{mainmenu.visible=false; swipeView.currentIndex = swipeView.currentIndex=4}
+            }
         }
 
+
+
+
+        Rectangle {
+            id: rectangle
+            x: 0
+            y: 1720
+            width: 1080
+            height: 200
+            color: "#696969"
+            border.color: "#000000"
+        }
+
+
+
+//Pfeil nach oben um das Hauptmenü schließen zu können
         Image {
             id: angleupimage
             x: 0
@@ -1963,54 +1878,21 @@ id:mapcircle1
                 height:100
                 text: qsTr("Button")
                 opacity: 0
-                onPressed: {flickable.interactive=false; flickable.contentY=1920;flickable.contentX=0;}
+                onPressed: {mainmenu.visible=false;}
 
             }
         }
-        interactive: false
-        contentX: 0
-        contentHeight: 2*1920
-        contentY: 1920
-        visible: true
-        flickableDirection: Flickable.VerticalFlick
-        boundsBehavior: Flickable.StopAtBounds
-        contentWidth: 1080
+
+
+
     }
 
-    //---------------------------------------------------------------------------------------
-    /*  header:Item {
 
 
-
-
-
-Text {
-id:timeanddate
-x:540
-y:50
-
-
-//text: Qt.formatDateTime(new Date(), "dd.MM.yyyy")
-text: Qt.formatTime(new Date(), "hh:mm")
-font.pointSize: 20
-color: '#FFFFFF'
-}
-
-
-
-
-
-
-
-
-
-
-} */
-
-    //--------------------FOOTER------------------------------------------------------
+//Footer
 
     Item{ id:footer; x:0;y:1820
-
+//Minimusikbuttons
         Item{
             id: musiccontrol
             width: 1080
@@ -2025,10 +1907,7 @@ color: '#FFFFFF'
 
             }
 
-
-
-
-
+//Lautstärkeanzeige zum muten (Lautsprecher)
             Image{
                 id: volumeimage
                 x: 123
@@ -2040,7 +1919,7 @@ color: '#FFFFFF'
             }
 
 
-
+//Muted den Song , drückt man nochmals drauf gelangt man wieder zu 50% der Lautstärke als Standardwert
             Button{
                 id: volumebutton
                 x: 123
@@ -2074,7 +1953,7 @@ color: '#FFFFFF'
 
 
 
-
+// Lautstärkeregelung
 
             Slider{
                 id:musicVolumeSlider;
@@ -2087,6 +1966,7 @@ color: '#FFFFFF'
                 value: 1;
                 onValueChanged: {playmusic.volume=musicVolumeSlider.value; musicVolumeRectangle.width=musicVolumeSlider.value*200; }
             }
+// Zeigt die Lautstärke in Form eines Balkens an
             Rectangle{
                 id:musicVolumeRectangle
                 color:"#ef7d25"
@@ -2097,7 +1977,7 @@ color: '#FFFFFF'
             }
 
             Image {
-                id: image2
+                id: stepforwardicon
                 x: 850
                 y: 0
                 width: 100
@@ -2106,6 +1986,7 @@ color: '#FFFFFF'
                 source: "background/step-forward.svg"
 
             }
+            //Nächster Song wird gewählt
             Button {
                 id: miniforwardSongButton
                 x: 850
@@ -2118,9 +1999,7 @@ color: '#FFFFFF'
                 //Spielt Musik bzw. pausiert Musik
                 onPressed: {
 
-                    curSong++
-
-
+                    curSong++;
                     if(curSong>songCount){curSong=0;playmusic.source=songList[curSong];songName.text=songTitles[curSong] ;startMusic()}
                     if(curSong<=songCount) {playmusic.source=songList[curSong];songName.text=songTitles[curSong];startMusic()}
 
@@ -2130,7 +2009,7 @@ color: '#FFFFFF'
             }
 
             Image {
-                id: image123
+                id: stepbackwardicon
                 x: 550
                 y: 0
                 width: 100
@@ -2139,6 +2018,7 @@ color: '#FFFFFF'
                 source: "background/step-backward.svg"
 
             }
+            //der vorherige Song wird gespielt
             Button {
                 id: miniplaybackButton
                 x: 550
@@ -2148,7 +2028,7 @@ color: '#FFFFFF'
                 text: "Button"
                 visible: true
                 opacity: 0
-                //Spielt Musik bzw. pausiert Musik
+
                 onPressed: {
                     curSong--;
                     if(curSong<0){curSong=songCount;playmusic.source=songList[curSong];songName.text=songTitles[curSong] ;startMusic();}
@@ -2172,6 +2052,7 @@ color: '#FFFFFF'
                 source: "background/play.svg"
 
             }
+
             Button {
                 id: miniplaySongButton
                 x: 700
@@ -2192,8 +2073,9 @@ color: '#FFFFFF'
             }
 
 
+            //Rechter Pfeil im Footer
             Image {
-                id: image24
+                id: anglerighticon
                 x: 980
                 y: 0
                 width: 100
@@ -2203,8 +2085,9 @@ color: '#FFFFFF'
                 source: "background/angle-left.svg"
             }
 
+            //Linker Pfeil im Footer
             Image{
-                id: image23
+                id: anglelefticon
                 x: 0
                 y: 0
                 width: 100
@@ -2214,42 +2097,31 @@ color: '#FFFFFF'
 
             }
 
+            //Interaktion des linken Pfeils
             Button {
-                id: button23
-                width: 104
+                id: angeleftbutton
+                width: 100
                 height: 100
-                text: qsTr("Button")
+
                 opacity: 0
                 onPressed: {musiccontrol.visible=false;heatcontrol.visible=true;}
             }
 
+            //Interaktion des rechten Pfeils
             Button {
-                id: button1
-                x: 978
+                id: anglerightbutton
+                x: 980
                 y: 0
                 width: 104
                 height: 100
-                text: qsTr("Button")
+
                 opacity: 0
                 onPressed: {musiccontrol.visible=false;heatcontrol.visible=true;}
             }
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Steuerung der Heizung
         Item{
 
             id: heatcontrol
@@ -2258,6 +2130,7 @@ color: '#FFFFFF'
             z: 0
             visible: false
 
+            //Zeigt den Bereich der Heizungssteuerung an
             Rectangle {
                 id: heatcontrolrectangle
                 x: 0
@@ -2269,6 +2142,7 @@ color: '#FFFFFF'
                 visible: true
             }
 
+           //Rechter Pfeil im Footer
             Image {
                 id: heatcontrolarrowright
                 x: 980
@@ -2280,6 +2154,7 @@ color: '#FFFFFF'
                 fillMode: Image.PreserveAspectFit
             }
 
+            //Linker Pfeil im Footer
             Image {
                 id: heatcontrolarrowleft
                 x: 0
@@ -2290,6 +2165,7 @@ color: '#FFFFFF'
                 fillMode: Image.PreserveAspectFit
             }
 
+             //Interaktion des rechten Pfeils
             Button {
                 id: heatcontrolleftbutton
                 width: 100
@@ -2299,19 +2175,19 @@ color: '#FFFFFF'
                 onPressed: {heatcontrol.visible=false; musiccontrol.visible=true}
             }
 
+             //Interaktion des linken Pfeils
             Button {
                 id: heatcontrolrightbutton
                 x: 980
                 y: 0
                 width: 100
                 height: 100
-                text: qsTr("Button")
                 opacity: 0
                 onPressed: {heatcontrol.visible=false; musiccontrol.visible=true}
 
             }
 
-
+ // Zeigt die linke Sitzheizung an
             Image {
                 id: heatcontrolseatleft
                 x: 245
@@ -2323,6 +2199,7 @@ color: '#FFFFFF'
                 source: "background/heat.svg"
             }
 
+// Lüftericon
             Image {
                 id: heatcontrolfan
                 x: 515
@@ -2334,6 +2211,7 @@ color: '#FFFFFF'
             }
 
 
+// Zeigt die rechte Sitzheizung an
             Image {
                 id: heatcontrolseatright
                 x: 735
@@ -2344,7 +2222,7 @@ color: '#FFFFFF'
                 source: "background/co-driver-heat.svg"
                 fillMode: Image.PreserveAspectFit
             }
-
+// Zeigt die Leiste unter der linken Sitzheizung an
             Rectangle {
                 id: heatcontrolleftseatbar
                 x: 245
@@ -2354,6 +2232,7 @@ color: '#FFFFFF'
                 color: "#ef7d25"
             }
 
+ // Zeigt die Leiste unter der rechten Sitzheizung an
             Rectangle {
                 id: heatcontrolrightseatbar
                 x: 735
@@ -2363,6 +2242,7 @@ color: '#FFFFFF'
                 color: "#ef7d25"
             }
 
+// Zeigt den Pfeil an um die Heizungssteuerung zu erweitern
             Image {
                 id: heatcontrollarrowup
                 x:490
@@ -2372,7 +2252,7 @@ color: '#FFFFFF'
                 fillMode: Image.PreserveAspectFit
                 source: "background/angle-up.svg"
             }
-
+//Plusicon
             Image {
                 id: heatcontrolplusimage
                 x: 624
@@ -2382,7 +2262,7 @@ color: '#FFFFFF'
                 fillMode: Image.PreserveAspectFit
                 source: "background/plus.svg"
             }
-
+//Minusicon
             Image {
                 id: heatcontrolminusimage
                 x: 381
@@ -2393,31 +2273,29 @@ color: '#FFFFFF'
                 source: "background/minus.svg"
             }
 
-
+//linke Temperaturanzeige
             Label {
                 id: temperaturleft
                 color:"#ef7d25"
-                x: 101
+                x: 100
                 y: 20
                 width: 75
                 height: 75
-                text:valueSource.temp+"°"
-                font.pointSize: 50
+                text:Math.round(valueSource.temp*10)/10+"°"
+                font.pointSize: 40
             }
-
-
+//rechte Temperaturanzeige
             Label {
                 id: temperaturright
                 color:"#ef7d25"
-                x: 881
+                x: 850
                 y: 20
                 width: 75
                 height: 75
-                text:valueSource.temp+"°"
-                font.pointSize: 50
-
+                text:Math.round(valueSource.temp*10)/10+"°"
+                font.pointSize: 40
             }
-
+//Interaktion des Pfeils um die Heizungssteuerung zu erweitern
             Button {
                 id: heatcontrolarrowupbutton
                 x: 515
@@ -2427,8 +2305,7 @@ color: '#FFFFFF'
                 opacity: 0
                 onPressed: {if(heatdialog){heatcontrollarrowuprectangle.visible=true;heatdialog=false; } else {heatcontrollarrowuprectangle.visible=false;heatdialog=true} }
             }
-
-
+//Erweitere Heizsteuerung
             Rectangle {
                 id: heatcontrollarrowuprectangle
                 x: 0
@@ -2437,7 +2314,7 @@ color: '#FFFFFF'
                 height: 300
                 visible: false
                 color: "#000000"
-
+//Frontscheibenheizung
                 Image{
                     id:heatcontrollarrowupfrontdefrost
                     x:490
@@ -2445,8 +2322,9 @@ color: '#FFFFFF'
                     width:100
                     height:50
                     source:"background/windshield-defrost.svg"
+                    fillMode: Image.PreserveAspectFit
                 }
-
+//Frontscheibenheizung aktivieren/deaktivieren
                 Button{
                     id:heatcontrollarrowupfrontdefrostbutton
                     x:490
@@ -2456,7 +2334,7 @@ color: '#FFFFFF'
                     height:50
                     onPressed: { if(heatcontrollarrowupfronstdefrostbar.visible){heatcontrollarrowupfronstdefrostbar.visible=false}else if (!heatcontrollarrowupfronstdefrostbar.visible){heatcontrollarrowupfronstdefrostbar.visible=true;}}
                 }
-
+//Leiste unter der Frontscheibenheizung
                 Image{
                     id:heatcontrollarrowupfronstdefrostbar
                     x:490
@@ -2465,10 +2343,9 @@ color: '#FFFFFF'
                     height:30
                     visible: false
                     source:"background/minus.svg"
-
+                    fillMode: Image.PreserveAspectFit
                 }
-
-
+//Heckscheibenheizung
                 Image{
                     id:heatcontrollarrowupbackdefrost
                     x:490
@@ -2476,7 +2353,9 @@ color: '#FFFFFF'
                     width:100
                     height:50
                     source:"background/rear-window-defrost.svg"
+                    fillMode: Image.PreserveAspectFit
                 }
+//Heckscheibenheizung  aktivieren /deaktivieren
                 Button{
                     id:heatcontrollarrowupbackdefrostbutton
                     x:490
@@ -2486,7 +2365,7 @@ color: '#FFFFFF'
                     height:50
                     onPressed: { if(heatcontrollarrowupbackdefrostbar.visible){heatcontrollarrowupbackdefrostbar.visible=false}else if (!heatcontrollarrowupbackdefrostbar.visible){heatcontrollarrowupbackdefrostbar.visible=true;}}
                 }
-
+//Leiste unter der Heckscheibenheizung
                 Image{
                     id:heatcontrollarrowupbackdefrostbar
                     x:490
@@ -2495,9 +2374,10 @@ color: '#FFFFFF'
                     height:30
                     visible: false
                     source:"background/minus.svg"
+                    fillMode: Image.PreserveAspectFit
+
                 }
-
-
+//Raumlüftung
                 Image{
                     id:heatcontrollarrowupcoolingcaricon
                     x:490
@@ -2505,7 +2385,10 @@ color: '#FFFFFF'
                     width:100
                     height:50
                     source:"background/recirculation.svg"
+                    fillMode: Image.PreserveAspectFit
+
                 }
+//Raumlüftung aktivieren/deaktivieren
                 Button{
                     id:heatcontrollarrowupcoolingcarbutton
                     x:490
@@ -2515,6 +2398,7 @@ color: '#FFFFFF'
                     height:50
                     onPressed: { if(heatcontrollarrowupcoolingcariconbar.visible){heatcontrollarrowupcoolingcariconbar.visible=false}else if (!heatcontrollarrowupcoolingcariconbar.visible){heatcontrollarrowupcoolingcariconbar.visible=true;}}
                 }
+//Leiste unter der Raumlüftung
                 Image{
                     id:heatcontrollarrowupcoolingcariconbar
                     x:490
@@ -2523,22 +2407,10 @@ color: '#FFFFFF'
                     width:100
                     height:30
                     source:"background/minus.svg"
+                    fillMode: Image.PreserveAspectFit
                 }
-
-
-
-
-
-
-
             }
-
-
-
-
-
-
-
+//Anzeige der Lüftersteuerung , Segment 1
             Rectangle {
                 id: heatcontrolfanbar1
                 x: 490
@@ -2548,12 +2420,7 @@ color: '#FFFFFF'
                 color: "#ffffff"
                 border.color: "#ffffff"
             }
-
-
-
-
-
-
+//Anzeige der Lüftersteuerung , Segment 2
             Rectangle {
                 id: heatcontrolfanbar2
                 x: 523
@@ -2563,7 +2430,7 @@ color: '#FFFFFF'
                 color: "#ffffff"
                 border.color: "#ffffff"
             }
-
+//Anzeige der Lüftersteuerung , Segment 3
             Rectangle {
                 id: heatcontrolfanbar3
                 x: 556
@@ -2573,7 +2440,7 @@ color: '#FFFFFF'
                 color: "#ffffff"
                 border.color: "#ffffff"
             }
-
+//Interaktion mit der Minustaste
             Button {
                 id: heatcontrolminusbutton
                 x: 381
@@ -2594,6 +2461,8 @@ color: '#FFFFFF'
 
                 }
             }
+
+//Interaktion mit der Plustaste
             Button {
                 id: heatcontrolplusbutton
                 x: 624
@@ -2616,8 +2485,9 @@ color: '#FFFFFF'
             }
         }
 
-    }
+}
 
+//Schnelles Beenden der Applikation
     Shortcut {
         sequence: "Ctrl+Q"
         context: Qt.ApplicationShortcut
@@ -2627,11 +2497,3 @@ color: '#FFFFFF'
 }
 
 
-
-
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

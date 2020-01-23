@@ -50,7 +50,7 @@ Item {
     Component.onCompleted: {
         if(true) {
 
-            temp = 20;
+            temp = 20.564;
             abs = true;
             handbrake = true;
             seatbelt = true;

@@ -16,7 +16,7 @@ Page{
 
         Rectangle {
             id: rectangle1
-            x: 185
+            x: 124
             y: 281
             width: 200
             height: 200
@@ -26,7 +26,7 @@ Page{
                 id: label
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("1")
                 font.pointSize: 100
             }
@@ -44,7 +44,7 @@ Page{
                 id: label1
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("2")
                 font.pointSize: 100
             }
@@ -52,7 +52,7 @@ Page{
 
         Rectangle {
             id: rectangle3
-            x: 724
+            x: 756
             y: 281
             width: 200
             height: 200
@@ -62,7 +62,7 @@ Page{
                 id: label2
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("3")
                 font.pointSize: 100
             }
@@ -70,7 +70,7 @@ Page{
 
         Rectangle {
             id: rectangle4
-            x: 185
+            x: 124
             y: 550
             width: 200
             height: 200
@@ -80,7 +80,7 @@ Page{
                 id: label3
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("4")
                 font.pointSize: 100
             }
@@ -98,7 +98,7 @@ Page{
                 id: label4
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("5")
                 font.pointSize: 100
             }
@@ -106,7 +106,7 @@ Page{
 
         Rectangle {
             id: rectangle6
-            x: 724
+            x: 756
             y: 550
             width: 200
             height: 200
@@ -116,7 +116,7 @@ Page{
                 id: label5
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("6")
                 font.pointSize: 100
             }
@@ -124,7 +124,7 @@ Page{
 
         Rectangle {
             id: rectangle7
-            x: 185
+            x: 124
             y: 814
             width: 200
             height: 200
@@ -134,7 +134,7 @@ Page{
                 id: label6
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("7")
                 font.pointSize: 100
             }
@@ -152,7 +152,7 @@ Page{
                 id: label7
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("8")
                 font.pointSize: 100
             }
@@ -160,7 +160,7 @@ Page{
 
         Rectangle {
             id: rectangle9
-            x: 724
+            x: 756
             y: 814
             width: 200
             height: 200
@@ -170,7 +170,7 @@ Page{
                 id: label8
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("9")
                 font.pointSize: 100
             }
@@ -178,9 +178,9 @@ Page{
 
         Rectangle {
             id: rectangle10
-            x: 185
+            x: 124
             y: 149
-            width: 746
+            width: 832
             height: 81
             color: "#ffffff"
         }
@@ -197,7 +197,7 @@ Page{
 
         Image {
             id: image1
-            x: 724
+            x: 756
             y: 1111
             width: 200
             height: 200
@@ -207,7 +207,7 @@ Page{
 
         Rectangle {
             id: rectangle11
-            x: 185
+            x: 124
             y: 1111
             width: 200
             height: 200
@@ -219,7 +219,7 @@ Page{
                 id: label9
                 x: 64
                 y: 20
-                color: "#ffffff"
+                color: "#ef7d25"
                 text: qsTr("0")
                 font.pointSize: 100
             }
