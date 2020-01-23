@@ -1,6 +1,6 @@
 # DAIS - Dashboard and Infotainment System
-<dl>Aufeinander abgestimmtes Dashboard- und Infotainmentsystem für die Daten des Bus-Systems (MQTT) entwickeln.</dl>  
-<dl>Die Inhalte in den Kapiteln <a href="#FUNC">Grundfunktionalitäten</a> und <a href="">Zusätzliche Funktionalitäten</a> nehmen Bezug auf die im <a href="https://github.com/Garzuuhl/DAIS/blob/master/Konzeptpapier/Konzeptpapier_Gruppe7.pdf">Konzeptpapier</a> festgelegten Stichpunkte.</dl>  
+<dl><b>DAIS</b> ist ein aufeinander abgestimmtes Dashboard- und Infotainmentsystem welches Daten von einem MQTT-Bus-System bezieht. Dieses Bus-System bezieht seine Daten wiederum von der <a href="https://www.hs-kl.de/">Hochschule Kaiserslautern (Standort Zweibrücken)</a> entwickelten Fahrsimulatoren.</dl>  
+<dl>Die Inhalte in den Kapiteln <a href="#FUNC">Grundfunktionalitäten</a> und<a href="#Z_FUNC">Zusätzliche Funktionalitäten</a> nehmen Bezug auf die im <a href="https://github.com/Garzuuhl/DAIS/blob/master/Konzeptpapier/Konzeptpapier_Gruppe7.pdf">Konzeptpapier</a> festgelegten Stichpunkte.</dl>  
 <dl>Die tatsächlich umgesetzten Funktionalitäten werden im Kapitel <a href="#IMPL_FUNC">Implementierte Funktionalitäten</a> behandelt.</dl>
 
 # Inhalt  
