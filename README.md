@@ -26,7 +26,7 @@
 <a name ="Dashboard_FUNC"/>  
 
 ## Dashboard  
-* Tacho/Drehzalmesser  
+* Tacho/Drehzahlmesser  
 * Aktueller Gang  
 * Blinker  
 * Warnleuchten  
@@ -78,7 +78,7 @@
 <a name="Dashboard_IMPL_FUNC"/>  
 
 ## Dashboard  
-* Tacho/Drehzalmesser
+* Tacho/Drehzahlmesser
 * Aktueller Gang  
 * Blinker  
 * Warnleuchte  
@@ -105,7 +105,7 @@
 <a name ="ToDo"/>  
 
 # ToDo´s  
-<dl>Es folgen nun zwei (jeweils eine für das Dashboard und das Infotainment System) interaktive ToDo Listen. Diese Listen enthalten Inhalte aus dem Kapitel <a href="#Z_FUNC">Zusätzliche Funtionalitäten</a> und <a href="#FUNC">Funktionalitäten</a>. Dass heißt es werden Punkte genannt, die entweder in der vorgegebenen Projekzeit nicht umgesetzt werden konnten, oder die nicht als Grundfunktionalitäten festgelegt wurden.</dl>  
+<dl>Es folgen nun zwei (jeweils eine für das Dashboard und das Infotainment System) interaktive ToDo Listen. Diese Listen enthalten Inhalte aus dem Kapitel <a href="#Z_FUNC">Zusätzliche Funtionalitäten</a> und <a href="#FUNC">Grundfunktionalitäten</a>. Dass heißt es werden Punkte genannt, die entweder in der vorgegebenen Zeit nicht umgesetzt werden konnten, oder die nicht als Grundfunktionalitäten festgelegt wurden.</dl>  
 <a name="Dashboard_ToDo"/>  
 
 ## Dashboard  
@@ -124,5 +124,14 @@
 <a name="TechnoFrame"/>  
 
 # Verwendete Technologie und Frameworks  
-<dl> Das DAIS wurde mithilfe von qml in der IDE Qt Creator umgesetzt. Die Wahl fiel auf qml, da die erstellten Anwendungen auf jede Plattform portiert werden können. Ein weiteres Argument, dass für die Entwicklung mit qml sprach war, dass es bereits ein <a href="https://github.com/Garzuuhl/DAIS/tree/master/Seafile/dashboard-examples/tesla_dashboard_mqtt">Anbindungsszenario</a> mit dem Bus-System von MQTT gab.</dl>  
-<dl> Außerdem wurde das Plugin "osm", dass Daten von <a href="https://www.openstreetmap.de/">OpenStreetMap</a> überträgt im Infotainment System genutzt.</dl>
+<dl>Das DAIS wurde mithilfe von qml in der IDE Qt Creator umgesetzt. Die Wahl fiel auf qml, da die erstellten Anwendungen auf jede Plattform portiert werden können. Ein weiteres Argument, dass für die Entwicklung mit qml sprach war, dass es bereits ein <a href="https://github.com/Garzuuhl/DAIS/tree/master/Seafile/dashboard-examples/tesla_dashboard_mqtt">Anbindungsszenario</a> mit dem Bus-System von MQTT gab.</dl>  
+<dl>Außerdem wurde das Plugin "osm", dass Karten Daten von <a href="https://www.openstreetmap.de/">OpenStreetMap</a> überträgt im Infotainment System genutzt.</dl>  
+<a name="TEAM"/>  
+
+# Projektteam  
+## Dashboard  
+<dl><a href="https://github.com/Garzuuhl">Philipp Zimmermann</a></dl>  
+<dl><a href="https://github.com/JulianFre">Julian Frenzel</a></dl>  
+## Infotainment  
+<dl><a href="https://github.com/MarcoMN">Marco Miles Noll</a></dl>  
+<dl><a href="https://github.com/Anker13">Jens Cedric Schug</a></dl>
