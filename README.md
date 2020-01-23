@@ -132,6 +132,7 @@
 ## Dashboard  
 <dl><a href="https://github.com/Garzuuhl">Philipp Zimmermann</a></dl>  
 <dl><a href="https://github.com/JulianFre">Julian Frenzel</a></dl>  
+
 ## Infotainment  
 <dl><a href="https://github.com/MarcoMN">Marco Miles Noll</a></dl>  
 <dl><a href="https://github.com/Anker13">Jens Cedric Schug</a></dl>
