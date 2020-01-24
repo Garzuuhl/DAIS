@@ -1,7 +1,9 @@
 # DAIS - Dashboard and Infotainment System
 <dl><b>DAIS</b> ist ein aufeinander abgestimmtes Dashboard- und Infotainmentsystem welches Daten von einem MQTT-Bus-System bezieht. Dieses Bus-System bezieht seine Daten wiederum von der <a href="https://www.hs-kl.de/">Hochschule Kaiserslautern (Standort Zweibrücken)</a> entwickelten Fahrsimulatoren.</dl>  
 <dl>Die Inhalte in den Kapiteln <a href="#FUNC">Grundfunktionalitäten</a> und<a href="#Z_FUNC">Zusätzliche Funktionalitäten</a> nehmen Bezug auf die im <a href="https://github.com/Garzuuhl/DAIS/blob/master/Konzeptpapier/Konzeptpapier_Gruppe7.pdf">Konzeptpapier</a> festgelegten Stichpunkte.</dl>  
-<dl>Die tatsächlich umgesetzten Funktionalitäten werden im Kapitel <a href="#IMPL_FUNC">Implementierte Funktionalitäten</a> behandelt.</dl>
+<dl>Die tatsächlich umgesetzten Funktionalitäten werden im Kapitel <a href="#IMPL_FUNC">Implementierte Funktionalitäten</a> behandelt.</dl>  
+<dl>Die <b>ausführbare Datei (.exe-Datei)</b> für das <b>Dashboard</b> befinden sich in einem <a href="https://github.com/Garzuuhl/DAIS/tree/master/Dashboard">.zip-Archiv</a>(Nach dem Entpacken des Archivs zu finden unter "release" &rarr; "Dashboard.exe")</dl>  
+<dl>Die <b>ausführbare Datei (.exe-Datei)</b> für das <b>Infotainment</b> befindet sich im Verzeichnis <a href="https://github.com/Garzuuhl/DAIS/tree/master/Infotainment/Infotainment_Release/release">Infotainment_Release &rarr; release</a> und heißt <b>DAIS_INFO2.exe</b>.</dl>
 
 # Inhalt  
 
