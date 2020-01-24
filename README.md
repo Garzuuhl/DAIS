@@ -109,18 +109,18 @@
 <a name="Dashboard_ToDo"/>  
 
 ## Dashboard  
-- [ ] Datumsanzeige  
-- [ ] Warnleuchte zum Anzeigen von geöffneten Türen, etc.  
-- [ ] Navigation  
-- [ ] Bedienung des Autos  
+* Datumsanzeige  
+* Warnleuchte zum Anzeigen von geöffneten Türen, etc.  
+* Navigation  
+* Bedienung des Autos  
 <a name ="Infotainment_ToDo"/>  
 
 ## Infotainment  
-- [ ] Mehrere Szenarien im Telefon Screen. Zum Beispiel: Kontakt- und Favoritenliste  
-- [ ] Mehrere Szenarien im Music Player Screen. Zum Beispiel: Einbindung einer Musik Streaming oder (Web)Radio Schnittstelle  
-- [ ] Fahrtenbuch  
-- [ ] Browser  
-- [ ] Kalender (inkl. Synchronisation durch das Smartphone)  
+* Mehrere Szenarien im Telefon Screen. Zum Beispiel: Kontakt- und Favoritenliste  
+* Mehrere Szenarien im Music Player Screen. Zum Beispiel: Einbindung einer Musik Streaming oder (Web)Radio Schnittstelle  
+* Fahrtenbuch  
+* Browser  
+* Kalender (inkl. Synchronisation durch das Smartphone)  
 <a name="TechnoFrame"/>  
 
 # Verwendete Technologie und Frameworks  
