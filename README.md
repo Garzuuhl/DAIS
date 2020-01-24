@@ -105,7 +105,7 @@
 <a name ="ToDo"/>  
 
 # ToDo´s  
-<dl>Es folgen nun zwei (jeweils eine für das Dashboard und das Infotainment System) interaktive ToDo Listen. Diese Listen enthalten Inhalte aus dem Kapitel <a href="#Z_FUNC">Zusätzliche Funtionalitäten</a> und <a href="#FUNC">Grundfunktionalitäten</a>. Dass heißt es werden Punkte genannt, die entweder in der vorgegebenen Zeit nicht umgesetzt werden konnten, oder die nicht als Grundfunktionalitäten festgelegt wurden.</dl>  
+<dl>Es folgen nun zwei (jeweils eine für das Dashboard und das Infotainment System) ToDo Listen. Diese Listen enthalten Inhalte aus dem Kapitel <a href="#Z_FUNC">Zusätzliche Funtionalitäten</a> und <a href="#FUNC">Grundfunktionalitäten</a>. Dass heißt es werden Punkte genannt, die entweder in der vorgegebenen Zeit nicht umgesetzt werden konnten, oder die nicht als Grundfunktionalitäten festgelegt wurden.</dl>  
 <a name="Dashboard_ToDo"/>  
 
 ## Dashboard  
